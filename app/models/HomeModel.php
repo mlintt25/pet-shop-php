@@ -16,17 +16,17 @@ class HomeModel extends Model {
     }
 
     // Lấy thông tin cơ bản của Pets
-    public function handleGetBase() {
+    public function handleGetDetail() {
         $basePetInfo = $this->db->table('pets')
-            ->select('name, thumbnail')
+            ->select('name, thumbnail, descr, other_name, origin, 
+                classify, fur_style, fur_color, weight, longevity')
             ->get();
 
         $response = [];
 
         if (!empty($basePetInfo)):
-            foreach ($basePetInfo as $item):
-                if (!empty($item['name']) 
-                        && !empty($item['thumbnail'])):
+            foreach ($basePetInfo as $key => $item):
+                if (!empty($basePetInfo[$key])):
                     $response = $basePetInfo;
                 endif;
             endforeach;
@@ -35,22 +35,5 @@ class HomeModel extends Model {
         return $response;
     }
 
-    // Lấy thông tin chi tiết của Pets
-    public function handleGetDetail() {
-        // $detailPetInfo = $this->db->table('pets')->get();
-
-        // var_dump($detailPetInfo);
-
-        // $response = [];
-
-        // if (!empty($detailPetInfo)):
-        //     foreach ($detailPetInfo as $key => $item):
-        //         if (!empty($item[$key])):
-        //             $response = $detailPetInfo;
-        //         endif;
-        //     endforeach;
-        // endif;
-
-        // return $response;
-    }
+ 
 }
