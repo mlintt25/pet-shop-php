@@ -18,7 +18,7 @@ class Connection {
             * */
             $options = [
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
             ];
 
             //Câu lệnh kết nối
@@ -28,7 +28,7 @@ class Connection {
 
         } catch (Exception $exception) {
             $mess = $exception->getMessage();
-            // App::$app->loadError('database', ['message' => $mess]);
+            App::$app->loadError('database', ['message' => $mess]);
             die($mess);
         }
     }

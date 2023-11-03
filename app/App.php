@@ -13,6 +13,7 @@ class App {
         if (!empty($routes['default_controller'])):
             $this->__controller = $routes['default_controller'];
         endif;
+        
         $this->__action = 'index';
         $this->__params = [];
 
@@ -27,6 +28,7 @@ class App {
 
     // Lấy url
     private function getUrl(){
+        echo $_SERVER['PATH_INFO'];
         if (!empty($_SERVER['PATH_INFO'])):
             $url = $_SERVER['PATH_INFO'];
         else:
