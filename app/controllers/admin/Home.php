@@ -22,6 +22,7 @@ class Home extends Controller {
                 ];
             endif;
 
+
             echo json_encode($response);
         endif;
     }

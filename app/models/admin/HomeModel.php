@@ -24,7 +24,7 @@ class HomeModel extends Model {
 
         $response = [];
         $checkNull = false;
-
+        
         if (!empty($basePetInfo)):
             foreach ($basePetInfo as $key => $item):
                 foreach ($item as $subKey => $subItem):
@@ -38,7 +38,7 @@ class HomeModel extends Model {
         if (!$checkNull):
             $response = $basePetInfo;
         endif;
-
+       
 
         return $response;
     }

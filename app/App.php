@@ -28,7 +28,6 @@ class App {
 
     // Lấy url
     private function getUrl(){
-        echo $_SERVER['PATH_INFO'];
         if (!empty($_SERVER['PATH_INFO'])):
             $url = $_SERVER['PATH_INFO'];
         else:

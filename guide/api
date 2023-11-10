@@ -3,5 +3,5 @@ Danh sách API
 1. API login: http://localhost:8082/Project_Pettu/api/login
 2. API thông tin chi tiết của Pets: http://localhost:8082/Project_Pettu/api/pets/detailInfo
 3. API thông tin chi tiết của Services: http://localhost:8082/Project_Pettu/api/services/detailInfo
-4. API thông tin chi tiết của Expert Team: http://localhost:8082/Project_Pettu/api/expert-team/detailInfo
+4. API thông tin chi tiết của Expert Team: http://localhost:8082/Project_Pettu/api/expert_team/detailInfo
 5. API danh sách bài viết theo danh mục: http://localhost:8082/Project_Pettu/api/blogs/listBlog

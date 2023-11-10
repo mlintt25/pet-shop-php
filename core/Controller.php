@@ -4,7 +4,7 @@ class Controller {
 
     public function model($model, $role = '') {
         if (!empty($role)):
-            if ($role === 'admin' || $role = 'user'):
+            if ($role == 'admin' || $role == 'user'):
                 if (file_exists(_DIR_ROOT.'/app/models/'.$role.'/'.$model.'.php')):
                     require_once _DIR_ROOT.'/app/models/'.$role.'/'.$model.'.php';
                     if (class_exists($model)):
@@ -22,7 +22,7 @@ class Controller {
                 endif;
             endif;
         endif;
-       
+        
         return false;
     }
 

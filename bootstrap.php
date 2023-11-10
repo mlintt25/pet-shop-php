@@ -44,7 +44,7 @@ require_once 'app/App.php';
 
 // Kiểm tra config của DB và load vào
 if (!empty($config['database'])):
-    $dbConfig = array_filter($config['database']);
+    $dbConfig = $config['database'];
     
     if (!empty($dbConfig)):
         require_once 'core/Connection.php';
