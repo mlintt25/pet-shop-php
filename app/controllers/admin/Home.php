@@ -1,18 +1,18 @@
 <?php
-class Service extends Controller {
-    private $serviceModel;
+class Home extends Controller {
+    private $homeModel;
 
     public function __construct() {
-        $this->serviceModel = $this->model('ServiceModel');
+        $this->homeModel = $this->model('HomeModel', 'user');
     }
 
     // Lấy thông tin chi tiết của Pets
-    public function getServiceDetailInfo() {
+    public function getPetDetailInfo() {
         $request = new Request();
 
         if ($request->isGet()): // Kiểm tra get
             
-            $result = $this->serviceModel->handleGetDetail(); // Gọi xử lý ở Model
+            $result = $this->homeModel->handleGetDetail(); // Gọi xử lý ở Model
 
             if (!empty($result)):
                 $response = $result;

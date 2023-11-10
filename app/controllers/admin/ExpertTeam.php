@@ -3,8 +3,7 @@ class ExpertTeam extends Controller {
     private $expertTeamModel;
 
     public function __construct() {
-        $this->expertTeamModel = $this->model('ExpertTeamModel');
-
+        $this->expertTeamModel = $this->model('ExpertTeamModel', 'user');
     }
 
     public function getExpertTeamInfo() {

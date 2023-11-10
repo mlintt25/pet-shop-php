@@ -2,15 +2,27 @@
 class Controller {
     public $db;
 
-    public function model($model) {
-        if (file_exists(_DIR_ROOT.'/app/models/'.$model.'.php')):
-            require_once _DIR_ROOT.'/app/models/'.$model.'.php';
-            if (class_exists($model)):
-                $model = new $model();
-                return $model;
+    public function model($model, $role = '') {
+        if (!empty($role)):
+            if ($role === 'admin' || $role = 'user'):
+                if (file_exists(_DIR_ROOT.'/app/models/'.$role.'/'.$model.'.php')):
+                    require_once _DIR_ROOT.'/app/models/'.$role.'/'.$model.'.php';
+                    if (class_exists($model)):
+                        $model = new $model();
+                        return $model;
+                    endif;
+                endif;
+            endif;
+        else:
+            if (file_exists(_DIR_ROOT.'/app/models/'.$model.'.php')):
+                require_once _DIR_ROOT.'/app/models/'.$model.'.php';
+                if (class_exists($model)):
+                    $model = new $model();
+                    return $model;
+                endif;
             endif;
         endif;
-
+       
         return false;
     }
 
