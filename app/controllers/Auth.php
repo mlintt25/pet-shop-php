@@ -7,19 +7,20 @@ class Auth extends Controller {
 
     }
 
+    // Xử lý login
     public function login() {
         $request = new Request();
 
         if ($request->isPost()): // Kiểm tra post
-            $data = file_get_contents("php://input");
-            $data = json_decode($data, true); // None -> object | True -> array
+            if (!empty($_POST)):
+                $data = $request->getFields();
 
-            if (!empty($data)):
-                if (!empty($data['username']) && !empty($data['password'])):
+                if (!empty($data)):
                     $username = $data['username'];
                     $password = $data['password'];
-    
+
                     $result = $this->authModel->handleLogin($username, $password);
+                    
                     if ($result):
                         $response = [
                             'message' => 'Đăng nhập thành công'
@@ -29,12 +30,78 @@ class Auth extends Controller {
                             'message' => 'Đăng nhập thất bại'
                         ];
                     endif;
-                    
-                    echo json_encode($response);
 
+                    echo json_encode($response);
                 endif;
             endif;
+        endif;
+    }
 
+    // Xử lý register
+    public function register() {
+        $request = new Request();
+        
+        if ($request->isPost()): // Kiểm tra post
+            $request->rules([
+                'fullname' => 'required|min:5',
+                'email' => 'required|email|min:11|unique:users:email',
+                'password' => 'required|min:6',
+                're_password' => 'required|match:password'
+            ]);
+
+            $request->message([
+                'fullname.required' => 'Họ tên không được để trống',
+                'fullname.min' => 'Họ tên phải lớn hơn 5 ký tự',
+                'email.required' => 'Email không được để trống',
+                'email.email' => 'Định dạng email không hợp lệ',
+                'email.min' => 'Email phải lớn hơn 11 ký tự',
+                'email.unique' => 'Email đã tồn tại',
+                'password.required' => 'Mật khẩu không được để trống',
+                'password.min' => 'Mật khẩu phải lớn hơn 6 ký tự',
+                're_password.required' => 'Mật khẩu không được để trống',
+                're_password.match' => 'Mật khẩu không trùng khớp',
+            ]);
+
+            $validate = $request->validate();
+            if ($validate):
+                $result = $this->authModel->handleRegister();
+
+                if ($result):
+                    $response = [
+                        'message' => 'Tạo tài khoản thành công'
+                    ];
+                else:
+                    $response = [
+                        'message' => 'Tạo tài khoản thất bại'
+                    ];
+                endif;
+            else:
+                $response = [
+                    'message' => 'Tạo tài khoản thất bại'
+                ];
+            endif;
+
+            echo json_encode($response);
+        endif;
+    }
+
+    public function active() {
+        $token = $_GET['token'];
+        
+        if (!empty($token)):
+            $result = $this->authModel->handleActiveAccount($token);
+
+            if ($result):
+                $response = [
+                    'message' => 'Tạo tài khoản thành công'
+                ];
+            else:
+                $response = [
+                    'message' => 'Tạo tài khoản thất bại'
+                ];
+            endif;
+
+            echo json_encode($response);
         endif;
     }
 }

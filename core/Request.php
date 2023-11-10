@@ -1,6 +1,5 @@
 <?php
 class Request{
-
     private $__rules = [], $__messages = [], $__errors = [];
     public $db;
     /*
@@ -200,7 +199,7 @@ class Request{
     }
 
     //get errors
-    public function errors($fieldName=''){
+    public function errors($fieldName = ''){
         if (!empty($this->__errors)){
             if (empty($fieldName)){
                 $errorsArr = [];
@@ -220,4 +219,5 @@ class Request{
     public function setErrors($fieldName, $ruleName){
         $this->__errors[$fieldName][$ruleName] = $this->__messages[$fieldName.'.'.$ruleName];
     }
+
 }

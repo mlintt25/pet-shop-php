@@ -5,6 +5,7 @@ $routes['tin-tuc/.+-(\d+).html'] = 'news/category/$1';
 
 // Định tuyến API
 $routes['api/login'] = 'auth/login'; // API login
+$routes['api/register'] = 'auth/register'; // API register
 
 // Admin API
 $routes['api/pets/detailInfo'] = 'admin/home/getPetDetailInfo'; // API thông tin chi tiết của Pets

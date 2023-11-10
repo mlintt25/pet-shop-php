@@ -1,5 +1,5 @@
 <?php
-class Session{
+class Session {
     /*
      * data(key, value) => set session
      * data(key) => get session

@@ -16,16 +16,88 @@ class AuthModel extends Model {
         return '';
     }
 
+    // Xử lý login
     public function handleLogin($username, $password) {
         $dbValue = $this->db->table('users')->select('id, email, password')
             ->where('email', '=', $username)
             ->first();
-        if (!empty($dbValue['password'])):
+        
+        if (!empty($dbValue)):
             $passwordHash = $dbValue['password'];
+            $userId = $dbValue['id'];
+            if (password_verify($password, $passwordHash)):
+                $loginToken = sha1(uniqid().time());
+                $dataToken = [
+                    'user_id' => $userId,
+                    'token' => $loginToken,
+                    'create_at' => date('Y-m-d H:i:s')
+                ];
+
+                $insertTokenStatus = $this->db->table('login_token')->insert($dataToken);
+                if ($insertTokenStatus):
+                    // Lưu login token vào session
+                    Session::data('login_token', $loginToken);
+                    return true;
+                endif;
+            endif;
         endif;
         
-        if ($dbValue && password_verify($password, $passwordHash)):
-            return true;
+        return false;
+    }
+
+    // Xử lý register
+    public function handleRegister() {
+        $activeToken = sha1(uniqid().time());
+        $dataInsert = [
+            'fullname' => $_POST['fullname'],
+            'email' => $_POST['email'],
+            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+            'active_token' => $activeToken,
+            'decentralization_id' => 2,
+            'create_at' => date('Y-m-d H:i:s')
+        ];
+
+        $insertStatus = $this->db->table('users')->insert($dataInsert);
+        if ($insertStatus):
+            // Tạo link active
+            $linkActive = _WEB_ROOT.'/auth/active?token='.$activeToken;
+            // Thiết lập mail
+            $subject = ucwords($_POST['fullname']).' ơi. Bạn vui lòng kích hoạt tài khoản';
+            $content = 'Chào bạn: '.ucwords($_POST['fullname']).'<br>';
+            $content .= 'Vui lòng click vào link dưới đây để kích hoạt tài khoản của bạn: <br>';
+            $content .= $linkActive.'<br>';
+            $content .= 'Trân trọng!';
+
+            $sendStatus = Mailer::sendMail($_POST['email'], $subject, $content);
+
+            if ($sendStatus):
+                return true;
+            endif;
+        endif;
+
+        return false;
+    }
+
+
+    public function handleActiveAccount($token) {
+        if (!empty($token)):
+            // Truy vấn sql để so sánh
+            $tokenQuery = $this->db->table('users')
+                ->select('id, fullname, email')
+                ->where('active_token', '=', $token)
+                ->first();
+
+            if (!empty($tokenQuery)):
+                $userId = $tokenQuery['id'];
+                $dataUpdate = [
+                    'status' => 1,
+                    'active_token' => null
+                ];
+                $updateStatus = $this->db->table('users')->update($dataUpdate, "id = $userId");
+                if ($updateStatus):
+                    return true;
+                endif;    
+            endif;
         endif;
 
         return false;

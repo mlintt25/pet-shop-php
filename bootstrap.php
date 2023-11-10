@@ -4,6 +4,7 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: Authorization, X-Requested-With, Content-Type");
 header('Access-Control-Request-Method: application/json');
+header('Content-Type: application/x-www-form-urlencoded');
 
 // Xử lý http root
 if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on'):
@@ -37,6 +38,9 @@ if (!empty($configsDir)):
     endforeach;
 endif;
 
+require_once 'phpmailer/PHPMailer.php';
+require_once 'phpmailer/SMTP.php';
+require_once 'phpmailer/Exception.php';
 
 require_once 'core/Route.php';
 require_once 'core/Session.php';
@@ -55,6 +59,8 @@ if (!empty($config['database'])):
 
 endif;
 
+
+require_once 'core/Mailer.php';
 require_once 'core/Model.php';
 require_once 'core/Controller.php';
 require_once 'core/Request.php';
