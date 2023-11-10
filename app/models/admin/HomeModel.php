@@ -23,14 +23,22 @@ class HomeModel extends Model {
             ->get();
 
         $response = [];
+        $checkNull = false;
 
         if (!empty($basePetInfo)):
             foreach ($basePetInfo as $key => $item):
-                if (!empty($basePetInfo[$key])):
-                    $response = $basePetInfo;
-                endif;
+                foreach ($item as $subKey => $subItem):
+                    if ($subItem === NULL || empty($subItem)):
+                        $checkNull = true;
+                    endif;
+                endforeach;
             endforeach;
         endif;
+
+        if (!$checkNull):
+            $response = $basePetInfo;
+        endif;
+
 
         return $response;
     }

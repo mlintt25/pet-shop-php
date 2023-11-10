@@ -3,7 +3,7 @@ class Home extends Controller {
     private $homeModel;
 
     public function __construct() {
-        $this->homeModel = $this->model('HomeModel', 'user');
+        $this->homeModel = $this->model('HomeModel', 'admin');
     }
 
     // Lấy thông tin chi tiết của Pets

@@ -3,7 +3,7 @@ class Service extends Controller {
     private $serviceModel;
 
     public function __construct() {
-        $this->serviceModel = $this->model('ServiceModel', 'user');
+        $this->serviceModel = $this->model('ServiceModel', 'admin');
     }
 
     // Lấy thông tin chi tiết của Pets

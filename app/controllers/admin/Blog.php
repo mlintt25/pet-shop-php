@@ -1,17 +1,18 @@
 <?php
-class ExpertTeam extends Controller {
-    private $expertTeamModel;
+class Blog extends Controller {
+    private $blogModel;
 
     public function __construct() {
-        $this->expertTeamModel = $this->model('ExpertTeamModel', 'admin');
+        $this->blogModel = $this->model('BlogModel', 'admin');
     }
 
-    public function getExpertTeamInfo() {
+    // Lấy danh sách bài viết 
+    public function getListBlog() {
         $request = new Request();
 
         if ($request->isGet()): // Kiểm tra get
             
-            $result = $this->expertTeamModel->handleGetDetail(); // Gọi xử lý ở Model
+            $result = $this->blogModel->handleGetListBlog(); // Gọi xử lý ở Model
 
             if (!empty($result)):
                 $response = $result;

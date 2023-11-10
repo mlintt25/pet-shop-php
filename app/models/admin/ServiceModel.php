@@ -22,13 +22,20 @@ class ServiceModel extends Model {
             ->get();
 
         $response = [];
+        $checkNull = false;
 
         if (!empty($baseServiceInfo)):
             foreach ($baseServiceInfo as $key => $item):
-                if (!empty($baseServiceInfo[$key])):
-                    $response = $baseServiceInfo;
-                endif;
+                foreach ($item as $subKey => $subItem):
+                    if ($subItem === NULL || empty($subItem)):
+                        $checkNull = true;
+                    endif;
+                endforeach;
             endforeach;
+        endif;
+
+        if (!$checkNull):
+            $response = $baseServiceInfo;
         endif;
 
         return $response;
