@@ -137,6 +137,15 @@ class Request{
                         endif;
                     endif;
 
+                    // ^(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{2,}$
+                    if ($ruleName=='special'):
+                        if (!preg_match('~^(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{2,}$~', trim($dataFields[$fieldName]))):
+                            $this->setErrors($fieldName, $ruleName);
+                            $checkValidate = false;
+                        endif;
+                    endif;
+
+
                     if ($ruleName=='unique'):
                         $tableName = null;
                         $fieldCheck = null;

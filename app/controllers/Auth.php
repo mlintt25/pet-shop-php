@@ -23,7 +23,8 @@ class Auth extends Controller {
                     
                     if ($result):
                         $response = [
-                            'message' => 'Đăng nhập thành công'
+                            'message' => 'Đăng nhập thành công',
+                            'user_data' => Session::data('user_data'),
                         ];
                     else:
                         $response = [
@@ -45,7 +46,7 @@ class Auth extends Controller {
             $request->rules([
                 'fullname' => 'required|min:5',
                 'email' => 'required|email|min:11|unique:users:email',
-                'password' => 'required|min:8',
+                'password' => 'required|min:8|special',
                 're_password' => 'required|match:password'
             ]);
 
@@ -58,6 +59,7 @@ class Auth extends Controller {
                 'email.unique' => 'Email đã tồn tại',
                 'password.required' => 'Mật khẩu không được để trống',
                 'password.min' => 'Mật khẩu phải lớn hơn 7 ký tự',
+                'password.special' => 'Mật khẩu phải có ít nhất 1 ký tự hoa và 1 ký tự đặc biệt',
                 're_password.required' => 'Mật khẩu không được để trống',
                 're_password.match' => 'Mật khẩu không trùng khớp',
             ]);
