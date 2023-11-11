@@ -45,19 +45,19 @@ class Auth extends Controller {
             $request->rules([
                 'fullname' => 'required|min:5',
                 'email' => 'required|email|min:11|unique:users:email',
-                'password' => 'required|min:6',
+                'password' => 'required|min:8',
                 're_password' => 'required|match:password'
             ]);
 
             $request->message([
                 'fullname.required' => 'Họ tên không được để trống',
-                'fullname.min' => 'Họ tên phải lớn hơn 5 ký tự',
+                'fullname.min' => 'Họ tên phải lớn hơn 4 ký tự',
                 'email.required' => 'Email không được để trống',
                 'email.email' => 'Định dạng email không hợp lệ',
                 'email.min' => 'Email phải lớn hơn 11 ký tự',
                 'email.unique' => 'Email đã tồn tại',
                 'password.required' => 'Mật khẩu không được để trống',
-                'password.min' => 'Mật khẩu phải lớn hơn 6 ký tự',
+                'password.min' => 'Mật khẩu phải lớn hơn 7 ký tự',
                 're_password.required' => 'Mật khẩu không được để trống',
                 're_password.match' => 'Mật khẩu không trùng khớp',
             ]);
@@ -71,14 +71,10 @@ class Auth extends Controller {
                         'message' => 'Tạo tài khoản thành công'
                     ];
                 else:
-                    $response = [
-                        'message' => 'Tạo tài khoản thất bại'
-                    ];
+                    $response = $request->errors();
                 endif;
             else:
-                $response = [
-                    'message' => 'Tạo tài khoản thất bại'
-                ];
+                $response = $request->errors();
             endif;
 
             echo json_encode($response);
