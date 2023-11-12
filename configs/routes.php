@@ -13,4 +13,7 @@ $routes['api/services/detailInfo'] = 'admin/service/getServiceDetailInfo'; // AP
 $routes['api/expert_team/detailInfo'] = 'admin/expertteam/getExpertTeamInfo'; // API lấy thông tin đội ngũ chuyên gia
 $routes['api/blogs/listBlog'] = 'admin/blog/getListBlog'; // API lấy danh sách blog theo danh mục
 
+
+// User API
+$routes['api/users/update'] = 'user/profile/updateInfo'
 ?>

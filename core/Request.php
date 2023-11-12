@@ -130,6 +130,14 @@ class Request{
                         endif;
                     endif;
 
+                    // ^(0|\+84)\d{9}$
+                    if ($ruleName=='phone'):
+                        if (!preg_match('~^(0|\+84)\d{9}$~', trim($dataFields[$fieldName]))):
+                            $this->setErrors($fieldName, $ruleName);
+                            $checkValidate = false;
+                        endif;
+                    endif;
+
                     if ($ruleName=='match'):
                         if (trim($dataFields[$fieldName])!=trim($dataFields[$ruleValue])):
                             $this->setErrors($fieldName, $ruleName);

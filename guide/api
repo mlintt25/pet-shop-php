@@ -6,3 +6,7 @@ Danh sách API
 4. API thông tin chi tiết của Services: http://localhost:8082/Project_Pettu/api/services/detailInfo
 5. API thông tin chi tiết của Expert Team: http://localhost:8082/Project_Pettu/api/expert_team/detailInfo
 6. API danh sách bài viết theo danh mục: http://localhost:8082/Project_Pettu/api/blogs/listBlog
+
+
+User
+1. API thay đổi thông tin người dùng: http://localhost:8082/Project_Pettu/api/users/update 

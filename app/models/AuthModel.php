@@ -39,9 +39,11 @@ class AuthModel extends Model {
                     Session::data('login_token', $loginToken);
                     // Lưu thông tin người đăng nhập
                     $userData = $this->db->table('users')
-                        ->select('id, fullname, thumbnail, email, password, 
-                            about_content, contact_facebook, contact_twitter, contact_linkedin,
-                            contact_pinterest, status, decentralization_id, last_activity, create_at')
+                        ->select('id, fullname, thumbnail, email, 
+                            dob, address, phone, password, about_content, 
+                            contact_facebook, contact_twitter, contact_linkedin,
+                            contact_pinterest, status, decentralization_id, 
+                            last_activity, create_at')
                         ->where('id', '=', $userId)
                         ->first();
                     Session::data('user_data', $userData);
