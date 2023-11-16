@@ -61,7 +61,6 @@ class User extends Controller {
                 if (!empty($result)):
                     $response = [
                         'message' => 'Thay đổi thành công',
-                        'user_data' => Session::data('user_data')
                     ];
                 else:
                     $response = [
