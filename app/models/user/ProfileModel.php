@@ -24,7 +24,6 @@ class ProfileModel extends Model {
         if (!empty($checkId)):
             $dataUpdate = [
                 'fullname' => $_POST['fullname'],
-                'email' => $_POST['email'],
                 'dob' => $_POST['dob'],
                 'address' => $_POST['address'],
                 'phone' => $_POST['phone'],
