@@ -15,7 +15,7 @@ class ServiceModel extends Model {
         return '';
     }
 
-    // Lấy thông tin cơ bản của Pets
+    // Lấy thông tin cơ bản của dịch vụ
     public function handleGetDetail() {
         $baseServiceInfo = $this->db->table('services')
             ->select('name, slug, icon, dersc, content')
@@ -32,6 +32,11 @@ class ServiceModel extends Model {
                     endif;
                 endforeach;
             endforeach;
+        else:
+            $response = [
+                'message' => 'Chưa có người dùng đăng ký dịch vụ'
+            ];
+            $checkNull = true;
         endif;
 
         if (!$checkNull):
