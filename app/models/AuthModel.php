@@ -18,13 +18,17 @@ class AuthModel extends Model {
 
     // Xử lý login
     public function handleLogin($username, $password) {
-        $dbValue = $this->db->table('users')->select('id, email, password')
+        $dbValue = $this->db->table('users')->select('id, email, password, status')
             ->where('email', '=', $username)
             ->first();
+
+        $response = [];
         
         if (!empty($dbValue)):
             $passwordHash = $dbValue['password'];
             $userId = $dbValue['id'];
+            $statusAccount = $dbValue['status'];
+
             if (password_verify($password, $passwordHash)):
                 $loginToken = sha1(uniqid().time());
                 $dataToken = [
@@ -35,24 +39,43 @@ class AuthModel extends Model {
 
                 $insertTokenStatus = $this->db->table('login_token')->insert($dataToken);
                 if ($insertTokenStatus):
-                    // Lưu login token vào session
-                    Session::data('login_token', $loginToken);
-                    // Lưu thông tin người đăng nhập
-                    $userData = $this->db->table('users')
-                        ->select('id, fullname, thumbnail, email, 
-                            dob, address, phone, password, about_content, 
-                            contact_facebook, contact_twitter, contact_linkedin,
-                            contact_pinterest, status, decentralization_id, 
-                            last_activity, create_at')
-                        ->where('id', '=', $userId)
-                        ->first();
-                    Session::data('user_data', $userData);
-                    
-                    return true;
+                    if ($statusAccount === 1):
+                        // Lưu login token vào session
+                        Session::data('login_token', $loginToken);
+                        // Lưu thông tin người đăng nhập
+                        $userData = $this->db->table('users')
+                            ->select('id, fullname, thumbnail, email, 
+                                dob, address, phone, password, about_content, 
+                                contact_facebook, contact_twitter, contact_linkedin,
+                                contact_pinterest, status, decentralization_id, 
+                                last_activity, create_at')
+                            ->where('id', '=', $userId)
+                            ->first();
+                        Session::data('user_data', $userData);
+
+                        return true;
+                    endif;
+
+                    if ($statusAccount === 0):
+                        $response = [
+                            'message' => 'Vui lòng kích hoạt tài khoản tại Gmail bạn dùng để đăng ký tài khoản'
+                        ];
+                    endif;
+
+                    if ($statusAccount === 2):
+                        $response = [
+                            'message' => 'Tài khoản của bạn đã tạm thời bị khoá. Vui lòng liên hệ quản trị viên để xử lý'
+                        ];
+                    endif;
                 endif;
             endif;
         endif;
-        
+
+        if (!empty($response)):
+            return $response;
+        endif;
+
+
         return false;
     }
 

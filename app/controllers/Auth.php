@@ -20,16 +20,20 @@ class Auth extends Controller {
                     $password = $data['password'];
 
                     $result = $this->authModel->handleLogin($username, $password);
-                    
-                    if ($result):
-                        $response = [
-                            'message' => 'Đăng nhập thành công',
-                            'user_data' => Session::data('user_data'),
-                        ];
-                    else:
-                        $response = [
-                            'message' => 'Đăng nhập thất bại'
-                        ];
+
+                    if (is_array($result)):
+                        $response = $result;
+                    else:                    
+                        if ($result):
+                            $response = [
+                                'message' => 'Đăng nhập thành công',
+                                'user_data' => Session::data('user_data'),
+                            ];
+                        else:
+                            $response = [
+                                'message' => 'Đăng nhập thất bại'
+                            ];
+                        endif;
                     endif;
 
                     echo json_encode($response);
