@@ -74,6 +74,48 @@ class UserModel extends Model {
 
         return $response;
     }
+
+    // Xử lý update trạng thái user
+    public function handleUpdateStatusAccount($userId) {
+        $queryGet = $this->db->table('users')
+            ->select('status')
+            ->where('id', '=', $userId)
+            ->first();
+
+            print_r($queryGet);
+        
+        if (!empty($queryGet)):
+            $dataUpdate = [
+                'status' => $_POST['status'],
+                'update_at' => date('Y-m-d H:i:s')
+            ];
+
+            $updateStatus = $this->db->table('users')
+                ->where('id', '=', $userId)
+                ->update($dataUpdate);
+
+             
+            if ($updateStatus):
+                // Xoá session cũ
+                Session::delete('user_data');
+
+                $userData = $this->db->table('users')
+                        ->select('id, fullname, thumbnail, email, 
+                            dob, address, phone, password, about_content, 
+                            contact_facebook, contact_twitter, contact_linkedin,
+                            contact_pinterest, status, decentralization_id, 
+                            last_activity, create_at')
+                        ->where('id', '=', $userId)
+                        ->first();
+                // Update lại session
+                Session::data('user_data', $userData);
+
+                return true;
+            endif;
+        endif;
+
+        return false;
+    }
    
  
 }

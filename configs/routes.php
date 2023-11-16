@@ -16,6 +16,7 @@ $routes['api/blogs/listBlog'] = 'admin/blog/getListBlog'; // API lấy danh sác
 // Admin API in Dashboard Admin Page
 $routes['api/dashboard/listUser'] = 'admin/dashboard/user/getListUser';
 $routes['api/dashboard/listCompetentPersonnel'] = 'admin/dashboard/user/getListCompetentPersonnel';
+$routes['api/dashboard/updateStatusAccount'] = 'admin/dashboard/user/updateStatusAccount';
 
 // User API
 $routes['api/users/update'] = 'user/profile/updateInfo'

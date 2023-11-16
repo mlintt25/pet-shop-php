@@ -45,4 +45,37 @@ class User extends Controller {
             echo json_encode($response);
         endif;
     }
+
+    // Update trạng thái account
+    public function updateStatusAccount() {
+        $request = new Request();
+
+        if ($request->isPost()): // Kiểm tra get
+            $data = $request->getFields();
+
+            if (!empty($data['user_id'])):
+                $userId = $data['user_id'];
+
+                $result = $this->userModel->handleUpdateStatusAccount($userId); // Gọi xử lý ở Model
+
+                if (!empty($result)):
+                    $response = [
+                        'message' => 'Thay đổi thành công',
+                        'user_data' => Session::data('user_data')
+                    ];
+                else:
+                    $response = [
+                        'message' => 'Đã có lỗi xảy ra'
+                    ];
+                endif;
+            else:
+                $response = [
+                    'message' => 'Đã có lỗi xảy ra'
+                ];
+            endif;
+
+            echo json_encode($response);
+           
+        endif;
+    }
 }
