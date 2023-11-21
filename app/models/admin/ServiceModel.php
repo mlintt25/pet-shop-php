@@ -18,7 +18,7 @@ class ServiceModel extends Model {
     // Lấy thông tin cơ bản của dịch vụ
     public function handleGetDetail() {
         $baseServiceInfo = $this->db->table('services')
-            ->select('name, slug, icon, dersc, content')
+            ->select('id, name, slug, icon, dersc, content')
             ->get();
 
         $response = [];

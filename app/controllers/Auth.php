@@ -88,6 +88,7 @@ class Auth extends Controller {
     }
 
     public function active() {
+        $response = [];
         $token = $_GET['token'];
         
         if (!empty($token)):
@@ -105,5 +106,30 @@ class Auth extends Controller {
 
             echo json_encode($response);
         endif;
+    }
+
+    public function logout() {
+        $response = [];
+
+        if (!empty(Session::data('user_data')['id'])):
+            $userId = Session::data('user_data')['id'];
+        endif;   
+
+        if (!empty($userId)):
+            $result = $this->authModel->handleLogout($userId);
+
+            if ($result):
+                $response = [
+                    'message' => 'Đăng xuất thành công'
+                ];
+            else:
+                $response = [
+                    'message' => 'Bạn chưa đăng nhập'
+                ];
+            endif;
+
+            echo json_encode($response);
+        endif;
+
     }
 }

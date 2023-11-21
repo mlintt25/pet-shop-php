@@ -3,7 +3,7 @@ Danh sách API
 Chung
 1. API đăng nhập: http://localhost:8082/Project_Pettu/api/login
 2. API đăng ký: http://localhost:8082/Project_Pettu/api/register
-
+3. API đăng xuất: http://localhost:8082/Project_Pettu/api/logout
 
 Admin
 1. API thông tin chi tiết của Pets: http://localhost:8082/Project_Pettu/api/pets/detailInfo
@@ -20,3 +20,4 @@ Admin Page
 
 User
 1. API thay đổi thông tin người dùng: http://localhost:8082/Project_Pettu/api/users/update 
+1. API lấy danh sách dịch vụ đã đăng ký: http://localhost:8082/Project_Pettu/api/users/getService

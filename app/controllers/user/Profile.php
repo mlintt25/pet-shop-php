@@ -6,6 +6,33 @@ class Profile extends Controller {
         $this->profileModel = $this->model('ProfileModel', 'user');
     }
 
+    // Lấy danh sách dịch vụ
+    public function getService() {
+        $request = new Request();
+
+        if (!empty(Session::data('user_data')['id'])):
+            $userId = Session::data('user_data')['id'];
+        endif;  
+
+        if ($request->isGet()): // Kiểm tra get
+            
+            if (!empty($userId)):
+                $result = $this->profileModel->handleGetService($userId); // Gọi xử lý ở Model
+            endif;
+            
+            if (!empty($result)):
+                $response = $result;
+            else:
+                $response = [
+                    'message' => 'Đã có lỗi xảy ra'
+                ];
+            endif;
+
+            echo json_encode($response);
+        endif;
+    }
+
+
     // Sửa thông tin
     public function updateInfo() {
         $request = new Request();

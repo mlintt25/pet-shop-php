@@ -61,4 +61,33 @@ class ProfileModel extends Model {
         return false;
     }
  
+    // Xử lý lấy danh sách dịch vụ đã đăng ký
+    public function handleGetService($userId) {
+        $queryGet = $this->db->table('user_service')
+            ->select('services.*, user_service.status, user_service.register_time')
+            ->join('users', 'users.id = user_service.userid')
+            ->join('services', 'services.id = user_service.serviceid')
+            ->where('users.id', '=', $userId)
+            ->where('user_service.status', '=', '1')
+            ->get();
+
+        $response = [];
+        $checkNull = false;
+
+        if (!empty($queryGet)):
+            foreach ($queryGet as $key => $item):
+                foreach ($item as $subKey => $subItem):
+                    if ($subItem === NULL || $subItem === ''):
+                        $checkNull = true;
+                    endif;
+                endforeach;
+            endforeach;
+        endif;
+
+        if (!$checkNull):
+            $response = $queryGet;
+        endif;
+
+        return $response;
+    }
 }

@@ -46,6 +46,7 @@ class User extends Controller {
         endif;
     }
 
+    
     // Update trạng thái account
     public function updateStatusAccount() {
         $request = new Request();

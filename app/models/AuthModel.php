@@ -37,9 +37,9 @@ class AuthModel extends Model {
                     'create_at' => date('Y-m-d H:i:s')
                 ];
 
-                $insertTokenStatus = $this->db->table('login_token')->insert($dataToken);
-                if ($insertTokenStatus):
-                    if ($statusAccount === 1):
+                if ($statusAccount === 1):
+                    $insertTokenStatus = $this->db->table('login_token')->insert($dataToken);
+                    if ($insertTokenStatus):
                         // Lưu login token vào session
                         Session::data('login_token', $loginToken);
                         // Lưu thông tin người đăng nhập
@@ -55,19 +55,20 @@ class AuthModel extends Model {
 
                         return true;
                     endif;
-
-                    if ($statusAccount === 0):
-                        $response = [
-                            'message' => 'Vui lòng kích hoạt tài khoản tại Gmail bạn dùng để đăng ký tài khoản'
-                        ];
-                    endif;
-
-                    if ($statusAccount === 2):
-                        $response = [
-                            'message' => 'Tài khoản của bạn đã tạm thời bị khoá. Vui lòng liên hệ quản trị viên để xử lý'
-                        ];
-                    endif;
                 endif;
+
+                if ($statusAccount === 0):
+                    $response = [
+                        'message' => 'Vui lòng kích hoạt tài khoản tại Gmail bạn dùng để đăng ký tài khoản'
+                    ];
+                endif;
+
+                if ($statusAccount === 2):
+                    $response = [
+                        'message' => 'Tài khoản của bạn đã tạm thời bị khoá. Vui lòng liên hệ quản trị viên để xử lý'
+                    ];
+                endif;
+
             endif;
         endif;
 
@@ -132,6 +133,21 @@ class AuthModel extends Model {
                     return true;
                 endif;    
             endif;
+        endif;
+
+        return false;
+    }
+
+    public function handleLogout($userId) {
+        $queryDelete = $this->db->table('login_token')
+            ->where('user_id', '=', $userId)
+            ->delete();
+        
+        if ($queryDelete):
+            Session::delete('login_token');
+            Session::delete('user_data');
+
+            return true;
         endif;
 
         return false;
