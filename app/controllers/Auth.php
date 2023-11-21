@@ -109,27 +109,29 @@ class Auth extends Controller {
     }
 
     public function logout() {
+        $request = new Request();
         $response = [];
 
-        if (!empty(Session::data('user_data')['id'])):
-            $userId = Session::data('user_data')['id'];
-        endif;   
+        $data = $request->getFields();
 
-        if (!empty($userId)):
-            $result = $this->authModel->handleLogout($userId);
+        if (!empty($data['userId'])):
+            $userId = $data['userId'];
 
-            if ($result):
-                $response = [
-                    'message' => 'Đăng xuất thành công'
-                ];
-            else:
-                $response = [
-                    'message' => 'Bạn chưa đăng nhập'
-                ];
+            if (!empty($userId)):
+                $result = $this->authModel->handleLogout($userId);
+    
+                if ($result):
+                    $response = [
+                        'message' => 'Đăng xuất thành công'
+                    ];
+                else:
+                    $response = [
+                        'message' => 'Bạn chưa đăng nhập'
+                    ];
+                endif;
+    
+                echo json_encode($response);
             endif;
-
-            echo json_encode($response);
         endif;
-
     }
 }
