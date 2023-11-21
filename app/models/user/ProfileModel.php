@@ -77,7 +77,7 @@ class ProfileModel extends Model {
         if (!empty($queryGet)):
             foreach ($queryGet as $key => $item):
                 foreach ($item as $subKey => $subItem):
-                    if ($subItem === NULL || $subItem === ''):
+                    if ($subItem === NULL || empty($subItem)):
                         $checkNull = true;
                     endif;
                 endforeach;

@@ -10,25 +10,27 @@ class Profile extends Controller {
     public function getService() {
         $request = new Request();
 
-        if (!empty(Session::data('user_data')['id'])):
-            $userId = Session::data('user_data')['id'];
-        endif;  
+        if ($request->isPost()): // Kiểm tra get
 
-        if ($request->isGet()): // Kiểm tra get
-            
-            if (!empty($userId)):
-                $result = $this->profileModel->handleGetService($userId); // Gọi xử lý ở Model
-            endif;
-            
-            if (!empty($result)):
-                $response = $result;
-            else:
-                $response = [
-                    'message' => 'Đã có lỗi xảy ra'
-                ];
-            endif;
+            $data = $request->getFields();
 
-            echo json_encode($response);
+            if (!empty($data['userId'])):
+                $userId = $data['userId'];
+
+                if (!empty($userId)):
+                    $result = $this->profileModel->handleGetService($userId); // Gọi xử lý ở Model
+                endif;
+                
+                if (!empty($result)):
+                    $response = $result;
+                else:
+                    $response = [
+                        'message' => 'Đã có lỗi xảy ra'
+                    ];
+                endif;
+    
+                echo json_encode($response);
+            endif;
         endif;
     }
 
