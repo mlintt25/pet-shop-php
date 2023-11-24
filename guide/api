@@ -8,9 +8,10 @@ Chung
 Admin
 1. API thông tin chi tiết của Pets: http://localhost:8082/Project_Pettu/api/pets/detailInfo
 2. API thông tin chi tiết của Services: http://localhost:8082/Project_Pettu/api/services/detailInfo
-3. API thông tin chi tiết của Expert Team: http://localhost:8082/Project_Pettu/api/expert_team/detailInfo
-3. API thông tin chi tiết của Expert Team theo Position: http://localhost:8082/Project_Pettu/api/expert_team/detailWithPosition
-4. API danh sách bài viết theo danh mục: http://localhost:8082/Project_Pettu/api/blogs/listBlog
+3. API thông tin thời gian làm việc: http://localhost:8082/Project_Pettu/api/services/getTimeWorking
+4. API thông tin chi tiết của Expert Team: http://localhost:8082/Project_Pettu/api/expert_team/detailInfo
+5. API thông tin chi tiết của Expert Team theo Position: http://localhost:8082/Project_Pettu/api/expert_team/detailWithPosition
+6. API danh sách bài viết theo danh mục: http://localhost:8082/Project_Pettu/api/blogs/listBlog
 
 
 Admin Page

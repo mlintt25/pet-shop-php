@@ -46,5 +46,28 @@ class ServiceModel extends Model {
         return $response;
     }
 
+     // Xử lý lấy thời gian làm việc
+     public function handleGetTimeWorking($timeWorkingId) {
+        $queryGet = $this->db->table('timeworking')
+            ->where('id', '=', $timeWorkingId)
+            ->first();
+
+        $response = [];
+        $checkNull = false;
+
+        if (!empty($queryGet)):
+            foreach ($queryGet as $key => $item):
+                if ($item === NULL || $item === ''):
+                    $checkNull = true;
+                endif;
+            endforeach;
+        endif;
+
+        if (!$checkNull):
+            $response = $queryGet;
+        endif;
+
+        return $response;
+    }
  
 }
