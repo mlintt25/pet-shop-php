@@ -6,7 +6,7 @@ class Service extends Controller {
         $this->serviceModel = $this->model('ServiceModel', 'admin');
     }
 
-    // Lấy thông tin chi tiết của Pets
+    // Lấy thông tin chi tiết của dịch vụ
     public function getServiceDetailInfo() {
         $request = new Request();
 

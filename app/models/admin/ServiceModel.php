@@ -15,17 +15,18 @@ class ServiceModel extends Model {
         return '';
     }
 
-    // Lấy thông tin cơ bản của dịch vụ
+    // Lấy thông tin chi tiết của dịch vụ
     public function handleGetDetail() {
-        $baseServiceInfo = $this->db->table('services')
-            ->select('id, name, slug, icon, dersc, content')
+        $queryGet = $this->db->table('services')
+            ->select('services.*, staff_position.name as staff_position_name')
+            ->join('staff_position', 'staff_position.position_id = services.teamid')
             ->get();
 
         $response = [];
         $checkNull = false;
 
-        if (!empty($baseServiceInfo)):
-            foreach ($baseServiceInfo as $key => $item):
+        if (!empty($queryGet)):
+            foreach ($queryGet as $key => $item):
                 foreach ($item as $subKey => $subItem):
                     if ($subItem === NULL || empty($subItem)):
                         $checkNull = true;
@@ -40,7 +41,7 @@ class ServiceModel extends Model {
         endif;
 
         if (!$checkNull):
-            $response = $baseServiceInfo;
+            $response = $queryGet;
         endif;
 
         return $response;
