@@ -9,6 +9,7 @@ Admin
 1. API thông tin chi tiết của Pets: http://localhost:8082/Project_Pettu/api/pets/detailInfo
 2. API thông tin chi tiết của Services: http://localhost:8082/Project_Pettu/api/services/detailInfo
 3. API thông tin chi tiết của Expert Team: http://localhost:8082/Project_Pettu/api/expert_team/detailInfo
+3. API thông tin chi tiết của Expert Team theo Position: http://localhost:8082/Project_Pettu/api/expert_team/detailWithPosition
 4. API danh sách bài viết theo danh mục: http://localhost:8082/Project_Pettu/api/blogs/listBlog
 
 
@@ -20,4 +21,4 @@ Admin Page
 
 User
 1. API thay đổi thông tin người dùng: http://localhost:8082/Project_Pettu/api/users/update 
-1. API lấy danh sách dịch vụ đã đăng ký: http://localhost:8082/Project_Pettu/api/users/getService
+2. API lấy danh sách dịch vụ đã đăng ký: http://localhost:8082/Project_Pettu/api/users/getService

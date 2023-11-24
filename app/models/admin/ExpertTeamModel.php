@@ -46,5 +46,33 @@ class ExpertTeamModel extends Model {
         return $response;
     }
 
+    // Xử lý lấy thông tin của expert team theo position
+    public function handleGetDetailInService($teamId) {
+        $expertTeamInService = $this->db->table('services')
+            ->select('DISTINCT expert_team.*')
+            ->join('staff_position', 'staff_position.position_id = services.teamid')
+            ->join('expert_team','expert_team.position_id = staff_position.position_id')
+            ->where('services.teamid', '=', $teamId)
+            ->get();
+
+        $response = [];
+        $checkNull = false;
+
+        if (!empty($expertTeamInService)):
+            foreach ($expertTeamInService as $key => $item):
+                foreach ($item as $subKey => $subItem):
+                    if ($subItem === NULL || $subItem === ''):
+                        $checkNull = true;
+                    endif;
+                endforeach;
+            endforeach;
+        endif;
+
+        if (!$checkNull):
+            $response = $expertTeamInService;
+        endif;
+
+        return $response;
+    }
  
 }
