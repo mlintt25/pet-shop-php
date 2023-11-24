@@ -35,7 +35,7 @@ class ServiceModel extends Model {
             endforeach;
         else:
             $response = [
-                'message' => 'Chưa có người dùng đăng ký dịch vụ'
+                'message' => 'Chưa có dịch vụ'
             ];
             $checkNull = true;
         endif;

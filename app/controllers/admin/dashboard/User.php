@@ -54,8 +54,8 @@ class User extends Controller {
         if ($request->isPost()): // Kiểm tra get
             $data = $request->getFields();
 
-            if (!empty($data['user_id'])):
-                $userId = $data['user_id'];
+            if (!empty($data['userId'])):
+                $userId = $data['userId'];
 
                 $result = $this->userModel->handleUpdateStatusAccount($userId); // Gọi xử lý ở Model
 

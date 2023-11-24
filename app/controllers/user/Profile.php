@@ -42,9 +42,9 @@ class Profile extends Controller {
         if ($request->isPost()):
             $data = $request->getFields();
 
-            if (!empty($data['user_id'])):
-                $userId = $data['user_id'];
-                
+            if (!empty($data['userId'])):
+                $userId = $data['userId'];
+
                 $request->rules([
                     'fullname' => 'required|min:5',
                     'phone' => 'phone'

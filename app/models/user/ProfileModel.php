@@ -20,7 +20,7 @@ class ProfileModel extends Model {
             ->select('id')
             ->where('id', '=', $userId)
             ->first();
-        
+
         if (!empty($checkId)):
             $dataUpdate = [
                 'fullname' => $_POST['fullname'],
@@ -64,7 +64,7 @@ class ProfileModel extends Model {
     // Xử lý lấy danh sách dịch vụ đã đăng ký
     public function handleGetService($userId) {
         $queryGet = $this->db->table('user_service')
-            ->select('services.*, user_service.status, user_service.register_time')
+            ->select('services.*, user_service.*')
             ->join('users', 'users.id = user_service.userid')
             ->join('services', 'services.id = user_service.serviceid')
             ->where('users.id', '=', $userId)
