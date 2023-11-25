@@ -78,4 +78,38 @@ class User extends Controller {
            
         endif;
     }
+
+    // Duyệt đăng ký của user
+    public function confirmRegisterService() {
+        $request = new Request();
+
+        if ($request->isPost()): // Kiểm tra get
+            $data = $request->getFields();
+
+            if (!empty($data['userId'])):
+                $userId = $data['userId'];
+
+                $result = $this->userModel->handleConfirmRegisterService($userId); // Gọi xử lý ở Model
+
+                if (!empty($result)):
+                    $response = [
+                        'message' => 'Đã duyệt thành công',
+                    ];
+                else:
+                    $response = [
+                        'message' => 'Đã có lỗi xảy ra'
+                    ];
+                endif;
+            else:
+                $response = [
+                    'message' => 'Đã có lỗi xảy ra'
+                ];
+            endif;
+
+            echo json_encode($response);
+           
+        endif;
+    }
+
+
 }

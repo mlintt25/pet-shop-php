@@ -101,6 +101,32 @@ class UserModel extends Model {
         return false;
     }
    
+    // Xử lý duyệt đăng ký dịch vụ của user
+    public function handleConfirmRegisterService($userId) {
+        $queryGet = $this->db->table('user_service')
+            ->select('status')
+            ->where('userid', '=', $userId)
+            ->first();
+
+        if (!empty($queryGet)):
+            $dataUpdate = [
+                'status' => $_POST['status'],
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+
+            $updateStatus = $this->db->table('user_service')
+                ->where('userid', '=', $userId)
+                ->update($dataUpdate);
+
+             
+            if ($updateStatus):
+                return true;
+            endif;
+        endif;
+
+        return false;
+    }
+   
     
  
 }
