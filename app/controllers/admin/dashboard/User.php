@@ -111,5 +111,24 @@ class User extends Controller {
         endif;
     }
 
+    // Lấy danh sách dịch vụ đã đăng ký của người dùng
+    public function getPendingService() {
+        $request = new Request();
 
+        if ($request->isGet()):
+            $result = $this->userModel->handleGetPendingService();
+
+            if (!empty($result)):
+                $response = $result;
+            else:
+                $response = [
+                    'message' => 'Đã có lỗi xảy ra'
+                ];
+            endif;
+
+            echo json_encode($response);
+        endif;
+
+
+    }
 }

@@ -19,6 +19,8 @@ Admin Page
 2. API lấy danh sách nhân sự: http://localhost:8082/Project_Pettu/api/dashboard/listCompetentPersonnel
 3. API thay đổi trạng thái tài khoản của user: http://localhost:8082/Project_Pettu/api/dashboard/updateStatusAccount
 4. API duyệt trạng thái đăng ký dịch vụ: http://localhost:8082/Project_Pettu/api/dashboard/confirmRegisterService
+5. API lấy danh sách dịch vụ đăng cần chờ duyệt: http://localhost:8082/Project_Pettu/api/dashboard/getPendingService
+
 
 User
 1. API thay đổi thông tin người dùng: http://localhost:8082/Project_Pettu/api/users/update 
