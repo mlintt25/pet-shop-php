@@ -77,4 +77,36 @@ class Profile extends Controller {
         endif;
     }
 
+    // Huỷ dịch vụ đã đăng ký
+    public function deleteService() {
+        $request = new Request();
+
+        if ($request->isPost()):
+
+            $data = $request->getFields();
+            $response = [];
+
+            if (!empty($data['userId']) && !empty($data['serviceId'])):
+                $userId = $data['userId'];
+                $serviceId = $data['serviceId'];
+    
+                $result = $this->profileModel->handleDeleteService($userId, $serviceId);
+    
+                if ($result):
+                    $response = [
+                        'status' => true,
+                        'message' => 'Huỷ dịch vụ thành công'
+                    ];
+                else:
+                    $response = [
+                        'status' => false,
+                        'message' => 'Huỷ dịch vụ thất bại'
+                    ];
+                endif;
+    
+                echo json_encode($response);
+            endif;
+        endif;
+    }
+
 }

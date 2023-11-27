@@ -90,4 +90,26 @@ class ProfileModel extends Model {
 
         return $response;
     }
+
+    // Xử lý xoá dịch vụ đã đăng ký
+    public function handleDeleteService($userId, $serviceId) {
+        $checkId = $this->db->table('user_service')
+            ->select('userid')
+            ->where('userid', '=', $userId)
+            ->where('serviceid', '=', $serviceId)
+            ->first();
+
+        if (!empty($checkId)):
+            $deleteStatus = $this->db->table('user_service')
+                ->where('userid', '=', $userId)
+                ->where('serviceid', '=', $serviceId)
+                ->delete();
+
+            if ($deleteStatus):
+                return true;
+            endif;
+        endif;
+
+        return false;
+    }
 }
