@@ -36,7 +36,12 @@ trait QueryBuilder {
         }else{
             $this->operator = ' OR ';
         }
-        $this->where.="$this->operator $field $compare '$value'";
+
+        if (strpos($value, ')') !== false):
+            $this->where.="$this->operator $field $compare $value"; 
+        else:
+            $this->where.="$this->operator $field $compare '$value'";
+        endif;
 
         return $this;
     }

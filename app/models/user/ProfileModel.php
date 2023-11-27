@@ -68,7 +68,8 @@ class ProfileModel extends Model {
             ->join('users', 'users.id = user_service.userid')
             ->join('services', 'services.id = user_service.serviceid')
             ->where('users.id', '=', $userId)
-            ->where('user_service.status', '=', '1')
+            ->where('(user_service.status', '=', '1')
+            ->orWhere('user_service.status', '=', '0)')
             ->get();
 
         $response = [];
@@ -77,7 +78,7 @@ class ProfileModel extends Model {
         if (!empty($queryGet)):
             foreach ($queryGet as $key => $item):
                 foreach ($item as $subKey => $subItem):
-                    if ($subItem === NULL || empty($subItem)):
+                    if ($subItem === NULL || $subItem === ''):
                         $checkNull = true;
                     endif;
                 endforeach;
