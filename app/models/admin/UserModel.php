@@ -102,10 +102,11 @@ class UserModel extends Model {
     }
    
     // Xử lý duyệt đăng ký dịch vụ của user
-    public function handleConfirmRegisterService($userId) {
+    public function handleConfirmRegisterService($userId, $serviceId) {
         $queryGet = $this->db->table('user_service')
             ->select('status')
             ->where('userid', '=', $userId)
+            ->where('serviceid', '=', $serviceId)
             ->first();
 
         if (!empty($queryGet)):
@@ -127,7 +128,7 @@ class UserModel extends Model {
         return false;
     }
 
-
+    // Xử lý lấy danh sách dịch vụ đang chờ duyệt
     public function handleGetPendingService() {
         $queryGet = $this->db->table('user_service')
             ->select('services.*, user_service.*')
@@ -145,6 +146,32 @@ class UserModel extends Model {
                         $checkNull = true;
                     endif;
                 endforeach;
+            endforeach;
+        endif;
+
+        if (!$checkNull):
+            $response = $queryGet;
+        endif;
+
+        return $response;
+    }
+
+    //
+    public function handleIsRegistered($userId, $serviceId) {
+        $queryGet = $this->db->table('user_service')
+            ->select('status')
+            ->where('userid', '=', $userId)
+            ->where('serviceid', '=', $serviceId)
+            ->first();
+
+        $response = [];
+        $checkNull = false;
+
+        if (!empty($queryGet)):
+            foreach ($queryGet as $key => $item):
+                if ($item === NULL || $item === ''):
+                    $checkNull = true;
+                endif;
             endforeach;
         endif;
 

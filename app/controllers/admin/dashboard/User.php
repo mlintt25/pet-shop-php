@@ -86,10 +86,11 @@ class User extends Controller {
         if ($request->isPost()): // Kiểm tra get
             $data = $request->getFields();
 
-            if (!empty($data['userId'])):
+            if (!empty($data['userId']) && !empty($data['serviceId'])):
                 $userId = $data['userId'];
+                $serviceId = $data['serviceId'];
 
-                $result = $this->userModel->handleConfirmRegisterService($userId); // Gọi xử lý ở Model
+                $result = $this->userModel->handleConfirmRegisterService($userId, $serviceId); // Gọi xử lý ở Model
 
                 if (!empty($result)):
                     $response = [
@@ -128,7 +129,41 @@ class User extends Controller {
 
             echo json_encode($response);
         endif;
-
-
     }
+
+    // 
+    public function isRegistered() {
+        $request = new Request();
+         
+        if ($request->isPost()): // Kiểm tra get
+            $data = $request->getFields();
+
+            if (!empty($data['userId']) && !empty($data['serviceId'])):
+                $userId = $data['userId'];
+                $serviceId = $data['serviceId'];
+
+                $result = $this->userModel->handleIsRegistered($userId, $serviceId); // Gọi xử lý ở Model
+
+                if (!empty($result)):
+                    $response = [
+                        'status' => true,
+                        'data' => $result['status'],
+                    ];
+                else:
+                    $response = [
+                        'status' => false,
+                        'message' => 'Đã có lỗi xảy ra'
+                    ];
+                endif;
+            else:
+                $response = [
+                    'message' => 'Đã có lỗi xảy ra'
+                ];
+            endif;
+
+            echo json_encode($response);
+        endif;
+    }
+
+
 }
