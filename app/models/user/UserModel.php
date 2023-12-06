@@ -33,6 +33,38 @@ class UserModel extends Model {
 
         return false;
     }
+    
+    // Xử lý thay đổi thời gian sử dụng dịch vụ
+    public function handleUpdatePeriodTime($data = []) {
+        if (!empty($data['userId']) && !empty($data['serviceId'])):
+            $userId = $data['userId'];
+            $serviceId = $data['serviceId'];
+
+            $checkId = $this->db->table('user_service')
+                ->select('status')
+                ->where('userid', '=', $userId)
+                ->where('serviceid', '=', $serviceId)
+                ->first();
+
+            if (!empty($checkId)):
+                $dataUpdate = [
+                    'periodTime' => $data['periodTime'],
+                    'updated_at' => date('Y-m-d H:i:s')
+                ];
+        
+                $updateStatus = $this->db->table('user_service')
+                    ->where('userid', '=', $userId)
+                    ->where('serviceid', '=', $serviceId)
+                    ->update($dataUpdate);
+        
+                if ($updateStatus):
+                    return true;
+                endif;
+            endif;
+        endif;
+        
+        return false;
+    }
 
     
 }

@@ -37,6 +37,30 @@ class User extends Controller {
             echo json_encode($response);
         endif;
     }
+
+    // Thay đổi thời gian sử dụng dịch vụ
+    public function updatePeriodTime() {
+        $request = new Request();
+
+        $data = $request->getFields();
+
+        if (!empty($data)):
+
+            $result = $this->userModel->handleUpdatePeriodTime($data);
+
+            if ($result):
+                $response = [
+                    'message' => 'Thay đổi thành công'
+                ];
+            else:
+                $response = [
+                    'message' => 'Thay đổi thất bại'
+                ];
+            endif;
+
+            echo json_encode($response);
+        endif;
+    }
    
 
 }

@@ -32,4 +32,5 @@ $routes['api/users/update'] = 'user/profile/updateInfo'; // API update thông ti
 $routes['api/users/getService'] = 'user/profile/getService'; // API lấy danh sách dịch vụ đã đăng ký - Profile
 $routes['api/users/registerService'] = 'user/user/registerService'; // API người dùng đăng ký dịch vụ - User
 $routes['api/users/deleteService'] = 'user/profile/deleteService'; // API xoá dịch vụ đã đăng ký - Profile
+$routes['api/users/updatePeriodTime'] = 'user/user/updatePeriodTime'; // API thay đổi thời gian sử dụng dịch vụ - User
 ?>
