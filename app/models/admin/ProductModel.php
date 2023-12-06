@@ -27,7 +27,10 @@ class ProductModel extends Model {
             foreach ($queryGet as $key => $item):
                 foreach ($item as $subKey => $subItem):
                     if ($subItem === NULL || $subItem === ''):
-                        $checkNull = true;
+                        if ($subKey !== 'promotionid' 
+                                && $subKey !== 'evaluate_star'):
+                            $checkNull = true;
+                        endif;
                     endif;
                 endforeach;
             endforeach;
