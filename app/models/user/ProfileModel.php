@@ -90,6 +90,16 @@ class ProfileModel extends Model
         endif;
 
         if (!$checkNull) :
+            for ($i = 0; $i < count($queryGet); $i++):
+                if ($queryGet[$i]['periodTime'] == 1):
+                    $time_str = '11:00:00';
+                    $queryGet[$i]['time'] = strtotime($time_str) - strtotime('TODAY');
+                else:
+                    $time_str = '17:00:00';
+                    $queryGet[$i]['time'] = strtotime($time_str) - strtotime('TODAY');
+                endif;
+            endfor;
+           
             $response = $queryGet;
         endif;
 

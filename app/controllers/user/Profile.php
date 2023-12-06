@@ -28,13 +28,13 @@ class Profile extends Controller {
                         'message' => 'Đã có lỗi xảy ra'
                     ];
                 endif;
-    
+                
                 echo json_encode($response);
             endif;
         endif;
     }
 
-
+    
     // Sửa thông tin
     public function updateInfo() {
         $request = new Request();
