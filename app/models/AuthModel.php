@@ -113,7 +113,7 @@ class AuthModel extends Model {
         return false;
     }
 
-
+    // Xử lý kích hoạt tài khoản
     public function handleActiveAccount($token) {
         if (!empty($token)):
             // Truy vấn sql để so sánh
@@ -138,6 +138,7 @@ class AuthModel extends Model {
         return false;
     }
 
+    // Xử lý đăng xuất
     public function handleLogout($userId) {
         $queryDelete = $this->db->table('login_token')
             ->where('user_id', '=', $userId)

@@ -111,7 +111,7 @@ class UserModel extends Model {
 
         if (!empty($queryGet)):
             $dataUpdate = [
-                'status' => $_POST['status'],
+                'status' => 1,
                 'updated_at' => date('Y-m-d H:i:s')
             ];
 

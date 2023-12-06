@@ -45,7 +45,6 @@ class User extends Controller {
             echo json_encode($response);
         endif;
     }
-
     
     // Update trạng thái account
     public function updateStatusAccount() {
@@ -131,7 +130,7 @@ class User extends Controller {
         endif;
     }
 
-    // 
+    // Lấy danh sách trạng thái của dịch vụ đã đăng ký
     public function isRegistered() {
         $request = new Request();
          

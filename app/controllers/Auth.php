@@ -87,6 +87,7 @@ class Auth extends Controller {
         endif;
     }
 
+    // Kích hoạt tài khoản
     public function active() {
         $response = [];
         $token = $_GET['token'];
@@ -108,6 +109,7 @@ class Auth extends Controller {
         endif;
     }
 
+    // Đăng xuất
     public function logout() {
         $request = new Request();
         $response = [];
