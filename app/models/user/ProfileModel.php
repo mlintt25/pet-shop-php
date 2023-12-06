@@ -1,5 +1,6 @@
 <?php
-class ProfileModel extends Model {
+class ProfileModel extends Model
+{
     public function tableFill()
     {
         return '';
@@ -15,13 +16,14 @@ class ProfileModel extends Model {
         return '';
     }
 
-    public function handleUpdate($userId) {
+    public function handleUpdate($userId)
+    {
         $checkId = $this->db->table('users')
             ->select('id')
             ->where('id', '=', $userId)
             ->first();
 
-        if (!empty($checkId)):
+        if (!empty($checkId)) :
             $dataUpdate = [
                 'fullname' => $_POST['fullname'],
                 'dob' => $_POST['dob'],
@@ -38,19 +40,19 @@ class ProfileModel extends Model {
             $updateStatus = $this->db->table('users')
                 ->where('id', '=', $userId)
                 ->update($dataUpdate);
-            
-            if ($updateStatus):
+
+            if ($updateStatus) :
                 // Xoá session cũ
                 Session::delete('user_data');
 
                 $userData = $this->db->table('users')
-                        ->select('id, fullname, thumbnail, email, 
+                    ->select('id, fullname, thumbnail, email, 
                             dob, address, phone, password, about_content, 
                             contact_facebook, contact_twitter, contact_linkedin,
                             contact_pinterest, status, decentralization_id, 
                             last_activity, create_at')
-                        ->where('id', '=', $userId)
-                        ->first();
+                    ->where('id', '=', $userId)
+                    ->first();
                 // Update lại session
                 Session::data('user_data', $userData);
 
@@ -60,13 +62,15 @@ class ProfileModel extends Model {
 
         return false;
     }
- 
+
     // Xử lý lấy danh sách dịch vụ đã đăng ký
-    public function handleGetService($userId) {
+    public function handleGetService($userId)
+    {
         $queryGet = $this->db->table('user_service')
-            ->select('services.*, user_service.*')
+            ->select('services.*, user_service.*, timeworking.*')
             ->join('users', 'users.id = user_service.userid')
             ->join('services', 'services.id = user_service.serviceid')
+            ->join('timeworking', 'user_service.periodTime = timeworking.id')
             ->where('users.id', '=', $userId)
             ->where('(user_service.status', '=', '1')
             ->orWhere('user_service.status', '=', '0)')
@@ -75,17 +79,17 @@ class ProfileModel extends Model {
         $response = [];
         $checkNull = false;
 
-        if (!empty($queryGet)):
-            foreach ($queryGet as $key => $item):
-                foreach ($item as $subKey => $subItem):
-                    if ($subItem === NULL || $subItem === ''):
+        if (!empty($queryGet)) :
+            foreach ($queryGet as $key => $item) :
+                foreach ($item as $subKey => $subItem) :
+                    if ($subItem === NULL || $subItem === '') :
                         $checkNull = true;
                     endif;
                 endforeach;
             endforeach;
         endif;
 
-        if (!$checkNull):
+        if (!$checkNull) :
             $response = $queryGet;
         endif;
 
@@ -93,20 +97,21 @@ class ProfileModel extends Model {
     }
 
     // Xử lý xoá dịch vụ đã đăng ký
-    public function handleDeleteService($userId, $serviceId) {
+    public function handleDeleteService($userId, $serviceId)
+    {
         $checkId = $this->db->table('user_service')
             ->select('userid')
             ->where('userid', '=', $userId)
             ->where('serviceid', '=', $serviceId)
             ->first();
 
-        if (!empty($checkId)):
+        if (!empty($checkId)) :
             $deleteStatus = $this->db->table('user_service')
                 ->where('userid', '=', $userId)
                 ->where('serviceid', '=', $serviceId)
                 ->delete();
 
-            if ($deleteStatus):
+            if ($deleteStatus) :
                 return true;
             endif;
         endif;
