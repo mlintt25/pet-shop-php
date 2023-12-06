@@ -16,6 +16,7 @@ $routes['api/services/getTimeWorking'] = 'admin/service/getTimeWorking'; // API 
 $routes['api/expert_team/detailInfo'] = 'admin/expertteam/getExpertTeamInfo'; // API lấy thông tin đội ngũ chuyên gia
 $routes['api/expert_team/detailWithPosition'] = 'admin/expertteam/getExpertTeamInService'; // API lấy thông tin đội ngũ chuyên gia theo từng chức vụ
 $routes['api/blogs/listBlog'] = 'admin/blog/getListBlog'; // API lấy danh sách blog theo danh mục
+$routes['api/products/listProduct'] = 'admin/product/getListProduct'; // API lấy danh sách sản phẩm
 
 // Admin API in Dashboard Admin Page
 $routes['api/dashboard/listUser'] = 'admin/dashboard/user/getListUser'; // API lấy danh sách người dùng - AdminPage
