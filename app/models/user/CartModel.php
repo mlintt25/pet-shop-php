@@ -124,10 +124,12 @@ class CartModel extends Model {
     }
 
     // Xử lý lấy danh sách sản phẩm trong giỏ hàng
-    public function handleGetListProductInCart() {
+    public function handleGetListProductInCart($userId) {
         $queryGet = $this->db->table('cart')
             ->select('cart.quantity, cart.price, product.product_name')
             ->join('product', 'cart.productid = product.productid')
+            ->join('users', 'cart.userid = users.id')
+            ->where('cart.userid', '=', $userId)
             ->get();
 
         $response = [];

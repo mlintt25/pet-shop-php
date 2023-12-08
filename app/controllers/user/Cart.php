@@ -102,22 +102,28 @@ class Cart extends Controller {
         $request = new Request();
         $response = [];
         
-        if ($request->isGet()):
-            $result = $this->cartModel->handleGetListProductInCart();
+        if ($request->isPost()):
+            $data = $request->getFields();
+            
+            if (!empty($data['userId'])):
+                $userId = $data['userId'];
+            
+                $result = $this->cartModel->handleGetListProductInCart($userId);
 
-            if (!empty($result)):
-                $response = [
-                    'status' => true,
-                    'data' => $result
-                ];
-            else:
-                $response = [
-                    'status' => false,
-                    'message' => 'Đã có lỗi xảy ra'
-                ];
+                if (!empty($result)):
+                    $response = [
+                        'status' => true,
+                        'data' => $result
+                    ];
+                else:
+                    $response = [
+                        'status' => false,
+                        'message' => 'Đã có lỗi xảy ra'
+                    ];
+                endif;
+    
+                echo json_encode($response);
             endif;
-
-            echo json_encode($response);
         endif;
     }
 
