@@ -29,3 +29,4 @@ User
 2. API lấy danh sách dịch vụ đã đăng ký: http://localhost:8082/Project_Pettu/api/users/getService
 3. API đăng ký dịch vụ: http://localhost:8082/Project_Pettu/api/users/registerService
 4. API huỷ dịch vụ đã đăng ký: http://localhost:8082/Project_Pettu/api/users/deleteService
+5. API thêm sản phẩm vào giỏ hàng: http://localhost:8082/Project_Pettu/api/users/addProductToCart
