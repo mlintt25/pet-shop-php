@@ -151,5 +151,9 @@ class CartModel extends Model {
 
         return $response;
     }
+
+    public function handleCountListProductInCart($userId) {
+        return count($this->handleGetListProductInCart($userId));
+    }
  
 }

@@ -33,3 +33,4 @@ User
 6. API thay đổi số lượng sản phẩm trong giỏ hàng: http://localhost:8082/Project_Pettu/api/users/updateQuantityInCart
 7. API xoá sản phẩm trong giỏ hàng: http://localhost:8082/Project_Pettu/api/users/deleteProductInCart
 8. API lấy danh sách sản phẩm trong giỏ hàng: http://localhost:8082/Project_Pettu/api/users/getListProductCart
+9. API lấy số lượng sản phẩm trong giỏ hàng: http://localhost:8082/Project_Pettu/api/users/countListProductCart

@@ -104,7 +104,7 @@ class Cart extends Controller {
         
         if ($request->isPost()):
             $data = $request->getFields();
-            
+
             if (!empty($data['userId'])):
                 $userId = $data['userId'];
             
@@ -119,6 +119,31 @@ class Cart extends Controller {
                     $response = [
                         'status' => false,
                         'message' => 'Đã có lỗi xảy ra'
+                    ];
+                endif;
+    
+                echo json_encode($response);
+            endif;
+        endif;
+    }
+
+    public function countListProductInCart() {
+        $request = new Request();
+        $response = [];
+        
+        if ($request->isPost()):
+            $data = $request->getFields();
+
+            if (!empty($data['userId'])):
+                $userId = $data['userId'];
+            
+                $result = $this->cartModel->handleCountListProductInCart($userId);
+
+                if (is_numeric($result)):
+                    $response = $result;
+                else:
+                    $response = [
+                        'status' => false,
                     ];
                 endif;
     
