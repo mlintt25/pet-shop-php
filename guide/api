@@ -31,3 +31,5 @@ User
 4. API huỷ dịch vụ đã đăng ký: http://localhost:8082/Project_Pettu/api/users/deleteService
 5. API thêm sản phẩm vào giỏ hàng: http://localhost:8082/Project_Pettu/api/users/addProductToCart
 6. API thay đổi số lượng sản phẩm trong giỏ hàng: http://localhost:8082/Project_Pettu/api/users/updateQuantityInCart
+7. API xoá sản phẩm trong giỏ hàng: http://localhost:8082/Project_Pettu/api/users/deleteProductInCart
+8. API lấy danh sách sản phẩm trong giỏ hàng: http://localhost:8082/Project_Pettu/api/users/getListProductCart

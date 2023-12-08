@@ -100,5 +100,54 @@ class CartModel extends Model {
 
         return false;
     }   
+
+    // Xử lý xoá sản phẩm khỏi giỏ hàng
+    public function handleDeleteProductInCart($userId, $productId) {
+        $queryCheck = $this->db->table('cart')
+            ->select('id')
+            ->where('userid', '=', $userId)
+            ->where('productid', '=', $productId)
+            ->first();
+
+        if (!empty($queryCheck)):
+            $deleteStatus = $this->db->table('cart')
+                ->where('userid', '=', $userId)
+                ->where('productid', '=', $productId)
+                ->delete();
+
+            if ($deleteStatus):
+                return true;
+            endif;
+        endif;
+
+        return false;
+    }
+
+    // Xử lý lấy danh sách sản phẩm trong giỏ hàng
+    public function handleGetListProductInCart() {
+        $queryGet = $this->db->table('cart')
+            ->select('cart.quantity, cart.price, product.product_name')
+            ->join('product', 'cart.productid = product.productid')
+            ->get();
+
+        $response = [];
+        $checkNull = false;
+
+        if (!empty($queryGet)):
+            foreach ($queryGet as $key => $item):
+                foreach ($item as $subKey => $subItem):
+                    if ($subItem === NULL || $subItem === ''):
+                        $checkNull = true;
+                    endif;
+                endforeach;
+            endforeach;
+        endif;
+
+        if (!$checkNull):
+            $response = $queryGet;
+        endif;
+
+        return $response;
+    }
  
 }
