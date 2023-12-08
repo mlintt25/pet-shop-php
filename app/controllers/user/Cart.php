@@ -36,4 +36,33 @@ class Cart extends Controller {
             endif;
         endif;
     }
+
+    // Update số lượng trong giỏ hàng
+    public function updateQuantityInCart() {
+        $request = new Request();
+
+        if ($request->isPost()):
+            $data = $request->getFields();
+            $response = [];
+            
+            if (!empty($data['userId']) && !empty($data['productId'])):
+                $userId = $data['userId'];
+                $productId = $data['productId'];
+
+                $result = $this->cartModel->handleUpdateQuantityInCart($userId, $productId);
+
+                if ($result):
+                    $response = [
+                        'status' => true,
+                    ];
+                else:
+                    $response = [
+                        'status' => false,
+                    ];
+                endif;
+
+                echo json_encode($response);
+            endif;
+        endif;
+    }
 }

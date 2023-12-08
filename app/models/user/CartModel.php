@@ -49,12 +49,14 @@ class CartModel extends Model {
 
             $updateQuantity = $this->db->table('cart')
                 ->where('userid', '=', $userId)
+                ->where('productid', '=', $productId)
                 ->update($dataUpdate);
 
             if ($updateQuantity):
                 $productQuantity = $this->db->table('cart')
                     ->select('quantity')
                     ->where('userid', '=', $userId)
+                    ->where('productid', '=', $productId)
                     ->first();
 
                 $dataUpdate = [
@@ -63,6 +65,7 @@ class CartModel extends Model {
 
                 $updateStatus = $this->db->table('cart')
                     ->where('userid', '=', $userId)
+                    ->where('productid', '=', $productId)
                     ->update($dataUpdate);
 
                 if ($updateStatus):
@@ -73,5 +76,29 @@ class CartModel extends Model {
 
         return false;
     }
+
+    // Xử lý thay đổi số lượng sản phẩm trong giỏ hàng
+    public function handleUpdateQuantityInCart($userId, $productId) {
+        $productPrice = $this->db->table('product')
+            ->select('price')
+            ->where('productid', '=', $productId)
+            ->first();
+
+        $dataUpdate = [ 
+            'quantity' => $_POST['quantity'],
+            'price' => $_POST['quantity'] * $productPrice['price']
+        ];
+
+        $updateStatus = $this->db->table('cart')
+            ->where('userid', '=', $userId)
+            ->where('productid', '=', $productId)
+            ->update($dataUpdate);
+
+        if ($updateStatus):
+            return true;
+        endif;
+
+        return false;
+    }   
  
 }
