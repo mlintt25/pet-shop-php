@@ -229,7 +229,7 @@ class CartModel extends Model {
             $this->db->resetQuery();
             
             if ($updateStatus):
-                $deleteAfterPayment = $this->handleDeleteAfterPayment($userId, $data, $billId);
+                $deleteAfterPayment = $this->handleDeleteAfterPayment($userId, $data);
                 if ($deleteAfterPayment):
                     return true;
                 endif;
@@ -240,26 +240,18 @@ class CartModel extends Model {
     }
  
     // Xoá sau khi thanh toán billdetail - cart
-    public function handleDeleteAfterPayment($userId, $data, $billId) {
-        $deleteBillDetail = $this->db->table('billdetail')
-            ->where('billid', '=', $billId)
-            ->delete();
+    public function handleDeleteAfterPayment($userId, $data) {
+        foreach ($data as $item):
+            $deleteCart = $this->db->table('cart')
+                ->where('productid', '=', $item['productid'])
+                ->where('userid', '=', $userId)
+                ->delete();
 
-        $this->db->resetQuery();
-        
-        if ($deleteBillDetail):
-            foreach ($data as $item):
-                $deleteCart = $this->db->table('cart')
-                    ->where('productid', '=', $item['productid'])
-                    ->where('userid', '=', $userId)
-                    ->delete();
+            $this->db->resetQuery();
+        endforeach;
 
-                $this->db->resetQuery();
-            endforeach;
-
-            if ($deleteCart):
-                return true;
-            endif;
+        if ($deleteCart):
+            return true;
         endif;
 
         return false;
