@@ -202,7 +202,9 @@ class CartModel extends Model {
     // Xử lý thanh toán 
     public function handlePayment($userId, $data, $paymentMethod) {
         $queryGetBillDetail = $this->db->table('billdetail')
-            ->select('billid, quantity, price')
+            ->select('billdetail.billid, billdetail.quantity, billdetail.price')
+            ->join('bill', 'billdetail.billid = bill.billid')
+            ->where('bill.userid', '=', $userId)
             ->get();
                         
         if (!empty($queryGetBillDetail)):
