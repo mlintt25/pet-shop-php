@@ -36,4 +36,5 @@ User
 9. API lấy số lượng sản phẩm trong giỏ hàng: http://localhost:8082/Project_Pettu/api/users/countListProductCart
 10. API tiến hành mua hàng giỏ hàng: http://localhost:8082/Project_Pettu/api/users/checkOutCart
 11. API thanh toán giỏ hàng: http://localhost:8082/Project_Pettu/api/users/paymentCart
+12. API lấy thông tin bill_detail: http://localhost:8082/Project_Pettu/api/users/billDetail
 

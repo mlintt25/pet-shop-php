@@ -258,4 +258,19 @@ class CartModel extends Model {
 
         return false;
     }
+
+    public function handleGetBillDetail($userId) {
+        $queryGet = $this->db->table('billdetail')
+            ->join('bill', 'bill.billid = billdetail.billid')    
+            ->where('bill.userid', '=', $userId)
+            ->get();
+
+        $response = [];
+
+        if (!empty($queryGet)):
+            $response = $queryGet;
+        endif;
+
+        return $response;
+    }
 }

@@ -211,4 +211,37 @@ class Cart extends Controller {
         endif;
     }
 
+    // Lấy thông tin billdetail
+    public function getBillDetail() {
+        $request = new Request();
+
+        if ($request->isPost()):
+            $data = $request->getFields();
+            $response = [];
+
+            if (!empty($data['userId'])):
+                $userId = $data['userId'];
+
+                if (!empty($userId)):
+                    $result = $this->cartModel->handleGetBillDetail($userId);
+
+                    if (!empty($result)):
+                        $response = [
+                            'status' => true,
+                            'data' => $result
+                        ];
+                    else:
+                        $response = [
+                            'status' => false,
+                            'message' => 'Đã có lỗi xảy ra'
+                        ];
+                    endif;
+
+                    echo json_encode($response);
+                endif;
+            endif;
+        endif;
+
+    }
+
 }
