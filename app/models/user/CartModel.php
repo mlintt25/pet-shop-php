@@ -155,5 +155,113 @@ class CartModel extends Model {
     public function handleCountListProductInCart($userId) {
         return count($this->handleGetListProductInCart($userId));
     }
+
+    // Xử lý tiến hành mua hàng
+    public function handleCheckOut($userId, $data) {
+        $queryCheck = $this->db->table('cart')
+            ->select('id')
+            ->where('userid', '=', $userId)
+            ->first();
+
+        if (!empty($queryCheck)):
+            $dataInsert = [
+                'userid' => $userId,
+                'total_price' => 0,
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+
+            $insertBillData = $this->db->table('bill')
+                ->insert($dataInsert);
+
+            if ($insertBillData):
+                $billId = $this->db->lastId();
+
+                if (!empty($data)):
+                    foreach ($data as $item):
+                        $dataInsertBillDetail = [
+                            'productid' => $item['productid'],
+                            'price' => $item['intoMoney'],
+                            'quantity' => $item['quantity'],
+                            'billid' => $billId,
+                            'created_at' => date('Y-m-d H:i:s')
+                        ];
+
+                        $insertStatus = $this->db->table('billdetail')->insert($dataInsertBillDetail);
+                    endforeach;
+
+                    if ($insertStatus):
+                        return true;
+                    endif;
+                endif;
+            endif;
+        endif;
+
+        return false;
+    }
+
+    // Xử lý thanh toán 
+    public function handlePayment($userId, $data, $paymentMethod) {
+        $queryGetBillDetail = $this->db->table('billdetail')
+            ->select('billid, quantity, price')
+            ->get();
+                        
+        if (!empty($queryGetBillDetail)):
+            $billId = $queryGetBillDetail[0]['billid'];
+
+            foreach ($queryGetBillDetail as $item):
+                $queryGetBill = $this->db->table('bill')
+                    ->select('total_price')
+                    ->where('billid', '=', $billId)
+                    ->first();
+                
+                if (!empty($queryGetBill)):
+                    $dataUpdateBill = [
+                        'total_price' => $queryGetBill['total_price'] + $item['quantity'] * $item['price'],
+                        'payment_method' => $paymentMethod,
+                    ];
+
+                    $updateStatus = $this->db->table('bill')
+                        ->where('billid', '=', $billId)
+                        ->update($dataUpdateBill);
+                endif;
+            endforeach;
+
+            $this->db->resetQuery();
+            
+            if ($updateStatus):
+                $deleteAfterPayment = $this->handleDeleteAfterPayment($userId, $data, $billId);
+                if ($deleteAfterPayment):
+                    return true;
+                endif;
+            endif;
+        endif;
+
+        return false;
+    }
  
+    // Xoá sau khi thanh toán billdetail - cart
+    public function handleDeleteAfterPayment($userId, $data, $billId) {
+        $deleteBillDetail = $this->db->table('billdetail')
+            ->where('billid', '=', $billId)
+            ->delete();
+
+        $this->db->resetQuery();
+        
+        if ($deleteBillDetail):
+            foreach ($data as $item):
+                $deleteCart = $this->db->table('cart')
+                    ->where('productid', '=', $item['productid'])
+                    ->where('userid', '=', $userId)
+                    ->delete();
+
+                $this->db->resetQuery();
+            endforeach;
+
+            if ($deleteCart):
+                return true;
+            endif;
+        endif;
+
+        return false;
+    }
 }

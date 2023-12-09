@@ -38,4 +38,6 @@ $routes['api/users/updateQuantityInCart'] = 'user/cart/updateQuantityInCart'; //
 $routes['api/users/deleteProductInCart'] = 'user/cart/removeProductInCart'; // API xoá sản phẩm trong giỏ hàng - User
 $routes['api/users/getListProductCart'] = 'user/cart/getListProductInCart'; // API lấy danh sách sản phẩm trong giỏ hàng - User
 $routes['api/users/countListProductCart'] = 'user/cart/countListProductInCart'; // API lấy số lượng sản phẩm trong giỏ hàng - User
+$routes['api/users/checkOutCart'] = 'user/cart/checkout'; // API bắt đầu thanh toán giỏ hàng - User
+$routes['api/users/paymentCart'] = 'user/cart/payment'; // API xác nhận thanh toán giỏ hàng - User
 ?>

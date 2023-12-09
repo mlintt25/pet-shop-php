@@ -152,4 +152,63 @@ class Cart extends Controller {
         endif;
     }
 
+    // Tiến hành mua hàng
+    public function checkOut() {
+        $request = new Request();
+
+        if ($request->isPost()):
+            $data = $request->getFields();
+            $response = [];
+            
+            if (!empty($data['userId'])):
+                $userId = $data['userId'];
+
+                $result = $this->cartModel->handleCheckOut($userId, $data['paymentProduct']);
+
+                if ($result):
+                    $response = [
+                        'status' => true,
+                    ];
+                else:
+                    $response = [
+                        'status' => false,
+                    ];
+                endif;
+
+                echo json_encode($response);
+            endif;
+        endif;
+    }
+
+    // Thanh toán
+    public function payment() {
+        $request = new Request();
+
+        if ($request->isPost()):
+            $data = $request->getFields();
+            $response = [];
+            
+            if (!empty($data['userId'])):
+                $userId = $data['userId'];
+                $paymentMethod = $data['payment_method'];
+
+                $result = $this->cartModel->handlePayment($userId, $data['paymentProduct'], $paymentMethod);
+
+                if ($result):
+                    $response = [
+                        'status' => true,
+                        'message' => 'Thanh toán thành công'
+                    ];
+                else:
+                    $response = [
+                        'status' => false,
+                        'message' => 'Thanh toán thất bại'
+                    ];
+                endif;
+
+                echo json_encode($response);
+            endif;
+        endif;
+    }
+
 }

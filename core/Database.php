@@ -51,7 +51,7 @@ class Database {
             else:
                 $sql = "UPDATE $table SET $updateStr";
             endif;
-
+            echo $sql;
             $status = $this->query($sql);
 
             if ($status):
@@ -69,6 +69,7 @@ class Database {
         else:
             $sql = 'DELETE FROM '.$table;
         endif;
+        echo $sql;
 
         $status = $this->query($sql);
 
