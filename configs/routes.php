@@ -25,6 +25,7 @@ $routes['api/dashboard/updateStatusAccount'] = 'admin/dashboard/user/updateStatu
 $routes['api/dashboard/confirmRegisterService'] = 'admin/dashboard/user/confirmRegisterService'; // API duyệt trạng thái đăng ký dịch vụ - AdminPage
 $routes['api/dashboard/getPendingService'] = 'admin/dashboard/user/getPendingService'; // API lấy danh sách dịch vụ đã đăng ký đăng chờ duyệt
 $routes['api/dashboard/isRegistered'] = 'admin/dashboard/user/isRegistered'; // API lấy trạng thái dịch vụ người dùng đã đăng ký
+$routes['api/dashboard/getPendingBill'] = 'admin/dashboard/cart/getListBillPending'; // API lấy danh sách hoá đơn chờ duyệt - User
 
 
 // User API
@@ -42,4 +43,5 @@ $routes['api/users/checkOutCart'] = 'user/cart/checkout'; // API bắt đầu th
 $routes['api/users/paymentCart'] = 'user/cart/payment'; // API xác nhận thanh toán giỏ hàng - User
 $routes['api/users/billDetail'] = 'user/cart/getBillDetail'; // API lấy thông tin trong billdetai - User
 $routes['api/users/deleteBillDetail'] = 'user/cart/deleleBillDetail'; // API xoá billdetai khi không thanh toán - User
+$routes['api/users/getApprovedBill'] = 'user/cart/getListBillApproved'; // API lấy danh sách hoá đơn đã được duyệt - User
 ?>

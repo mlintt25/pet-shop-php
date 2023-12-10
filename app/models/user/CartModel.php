@@ -314,4 +314,47 @@ class CartModel extends Model {
 
         return false;
     }
+
+    // Xử lý lấy danh sách hoá đơn đã duyệt
+    public function handleGetListBillApproved($userId) {
+        $queryGet = $this->db->table('bill')
+            ->select('bill.billid, bill.payment_method, bill.total_price, bill.created_at,
+                billdetail.productid, billdetail.quantity, billdetail.price, product.product_name')
+            ->join('billdetail', 'billdetail.billid = bill.billid')
+            ->join('product', 'billdetail.productid = product.productid')
+            ->where('bill.userid', '=', $userId)
+            ->where('bill.status', '=', 1)
+            ->get();
+
+        $response = [];
+        $resultArray = [];
+
+        if (!empty($queryGet)):
+            foreach ($queryGet as $item) {
+                $billId = $item["billid"];
+            
+                if (!isset($resultArray[$billId])) {
+                    // Nếu billid chưa có trong mảng kết quả, tạo một mục mới
+                    $resultArray[$billId] = [
+                        "payment_method" => $item["payment_method"],
+                        "total_price" => $item["total_price"],
+                        "created_at" => $item["created_at"],
+                        "products" => []
+                    ];
+                }
+            
+                // Thêm thông tin sản phẩm vào danh sách sản phẩm của billid
+                $resultArray[$billId]["products"][] = [
+                    "productid" => $item["productid"],
+                    "quantity" => $item["quantity"],
+                    "price" => $item["price"],
+                    "product_name" => $item["product_name"]
+                ];
+            }
+
+            $response = $resultArray;
+        endif;
+
+        return $response;
+    }
 }

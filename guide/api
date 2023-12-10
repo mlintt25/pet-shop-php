@@ -22,7 +22,7 @@ Admin Page
 4. API duyệt trạng thái đăng ký dịch vụ: http://localhost:8082/Project_Pettu/api/dashboard/confirmRegisterService
 5. API lấy danh sách dịch vụ đăng cần chờ duyệt: http://localhost:8082/Project_Pettu/api/dashboard/getPendingService
 6. API lấy trạng thái dịch vụ người dùng đã đăng ký: http://localhost:8082/Project_Pettu/api/dashboard/isRegistered
-
+7. API lấy danh sách hoá đơn đang chờ duyệt: http://localhost:8082/Project_Pettu/api/dashboard/getPendingBill
 
 User
 1. API thay đổi thông tin người dùng: http://localhost:8082/Project_Pettu/api/users/update 
@@ -38,4 +38,5 @@ User
 11. API thanh toán giỏ hàng: http://localhost:8082/Project_Pettu/api/users/paymentCart
 12. API lấy thông tin bill_detail: http://localhost:8082/Project_Pettu/api/users/billDetail
 13. API xoá bill - bill_detail khi unpayment: http://localhost:8082/Project_Pettu/api/users/deleteBillDetail
+14. API lấy danh sách hoá đơn đã được duyệt: http://localhost:8082/Project_Pettu/api/users/getApprovedBill
 
