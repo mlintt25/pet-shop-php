@@ -175,6 +175,7 @@ class CartModel extends Model {
 
             if ($insertBillData):
                 $billId = $this->db->lastId();
+                Session::data('bill_id', $billId);
 
                 if (!empty($data)):
                     unset($data[0]);
@@ -204,15 +205,16 @@ class CartModel extends Model {
 
     // Xử lý thanh toán 
     public function handlePayment($userId, $data, $paymentMethod) {
+        $billId = Session::data('bill_id');
+
         $queryGetBillDetail = $this->db->table('billdetail')
             ->select('billdetail.billid, billdetail.quantity, billdetail.price')
             ->join('bill', 'billdetail.billid = bill.billid')
             ->where('bill.userid', '=', $userId)
+            ->where('billdetail.billid', '=', $billId)
             ->get();
                         
         if (!empty($queryGetBillDetail)):
-            $billId = $queryGetBillDetail[0]['billid'];
-
             foreach ($queryGetBillDetail as $item):
                 $queryGetBill = $this->db->table('bill')
                     ->select('total_price')
@@ -228,11 +230,11 @@ class CartModel extends Model {
                     $updateStatus = $this->db->table('bill')
                         ->where('billid', '=', $billId)
                         ->update($dataUpdateBill);
+
+                    $this->db->resetQuery();
                 endif;
             endforeach;
 
-            $this->db->resetQuery();
-            
             if ($updateStatus):
                 $deleteAfterPayment = $this->handleDeleteAfterPayment($userId, $data);
                 if ($deleteAfterPayment):
@@ -256,6 +258,7 @@ class CartModel extends Model {
         endforeach;
 
         if ($deleteCart):
+            Session::delete('bill_id');
             return true;
         endif;
 
@@ -263,9 +266,12 @@ class CartModel extends Model {
     }
 
     public function handleGetBillDetail($userId) {
+        $billId = Session::data('bill_id');
+
         $queryGet = $this->db->table('billdetail')
             ->join('bill', 'bill.billid = billdetail.billid')    
             ->where('bill.userid', '=', $userId)
+            ->where('billdetail.billid', '=', $billId)
             ->get();
 
         $response = [];
