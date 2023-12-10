@@ -37,4 +37,5 @@ User
 10. API tiến hành mua hàng giỏ hàng: http://localhost:8082/Project_Pettu/api/users/checkOutCart
 11. API thanh toán giỏ hàng: http://localhost:8082/Project_Pettu/api/users/paymentCart
 12. API lấy thông tin bill_detail: http://localhost:8082/Project_Pettu/api/users/billDetail
+13. API xoá bill - bill_detail khi unpayment: http://localhost:8082/Project_Pettu/api/users/deleteBillDetail
 

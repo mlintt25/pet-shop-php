@@ -282,4 +282,36 @@ class CartModel extends Model {
 
         return $response;
     }
+
+    // Xử lý xoá bill và billdetail khi unpayment
+    public function handleDeleleBillDetail($userId) {
+        $billId = Session::data('bill_id');
+
+        $queryGet = $this->db->table('billdetail')
+            ->join('bill', 'bill.billid = billdetail.billid')    
+            ->where('bill.userid', '=', $userId)
+            ->where('billdetail.billid', '=', $billId)
+            ->get();
+
+        if (!empty($queryGet)):
+            $deleteBillDetail = $this->db->table('billdetail')  
+                ->where('billid', '=', $billId)
+                ->delete();
+            
+            $this->db->resetQuery();
+
+            if ($deleteBillDetail):
+                $deleteBill = $this->db->table('bill')  
+                    ->where('billid', '=', $billId)
+                    ->delete();
+                
+                if ($deleteBill):
+                    Session::delete('bill_id');
+                    return true;
+                endif;
+            endif;
+        endif;
+
+        return false;
+    }
 }

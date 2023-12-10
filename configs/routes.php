@@ -41,4 +41,5 @@ $routes['api/users/countListProductCart'] = 'user/cart/countListProductInCart'; 
 $routes['api/users/checkOutCart'] = 'user/cart/checkout'; // API bắt đầu thanh toán giỏ hàng - User
 $routes['api/users/paymentCart'] = 'user/cart/payment'; // API xác nhận thanh toán giỏ hàng - User
 $routes['api/users/billDetail'] = 'user/cart/getBillDetail'; // API lấy thông tin trong billdetai - User
+$routes['api/users/deleteBillDetail'] = 'user/cart/deleleBillDetail'; // API xoá billdetai khi không thanh toán - User
 ?>

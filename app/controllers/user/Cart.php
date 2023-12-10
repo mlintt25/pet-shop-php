@@ -243,7 +243,37 @@ class Cart extends Controller {
                 endif;
             endif;
         endif;
+    }
 
+    // Xoá bill detail khi không thanh toán
+    public function deleleBillDetail() {
+        $request = new Request();
+
+        if ($request->isPost()):
+            $data = $request->getFields();
+            $response = [];
+
+            if (!empty($data['userId'])):
+                $userId = $data['userId'];
+
+                if (!empty($userId)):
+                    $result = $this->cartModel->handleDeleleBillDetail($userId);
+
+                    if ($result):
+                        $response = [
+                            'status' => true,
+                        ];
+                    else:
+                        $response = [
+                            'status' => false,
+                            'message' => 'Đã có lỗi xảy ra'
+                        ];
+                    endif;
+
+                    echo json_encode($response);
+                endif;
+            endif;
+        endif;
     }
 
 }
