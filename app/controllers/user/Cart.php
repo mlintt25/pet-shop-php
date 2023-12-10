@@ -157,9 +157,10 @@ class Cart extends Controller {
         $request = new Request();
 
         if ($request->isPost()):
-            $data = $request->getFields();
+            $json_data = file_get_contents("php://input");
+            $data = json_decode($json_data, true); // Chuyển đổi JSON thành mảng PHP
             $response = [];
-            
+
             if (!empty($data['userId'])):
                 $userId = $data['userId'];
 
@@ -185,7 +186,8 @@ class Cart extends Controller {
         $request = new Request();
 
         if ($request->isPost()):
-            $data = $request->getFields();
+            $json_data = file_get_contents("php://input");
+            $data = json_decode($json_data, true); // Chuyển đổi JSON thành mảng PHP
             $response = [];
             
             if (!empty($data['userId'])):

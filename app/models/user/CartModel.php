@@ -177,9 +177,12 @@ class CartModel extends Model {
                 $billId = $this->db->lastId();
 
                 if (!empty($data)):
+                    unset($data[0]);
+                    $data = array_values($data);
+
                     foreach ($data as $item):
                         $dataInsertBillDetail = [
-                            'productid' => $item['productid'],
+                            'productid' => $item['id'],
                             'price' => $item['intoMoney'],
                             'quantity' => $item['quantity'],
                             'billid' => $billId,
@@ -245,7 +248,7 @@ class CartModel extends Model {
     public function handleDeleteAfterPayment($userId, $data) {
         foreach ($data as $item):
             $deleteCart = $this->db->table('cart')
-                ->where('productid', '=', $item['productid'])
+                ->where('productid', '=', $item['id'])
                 ->where('userid', '=', $userId)
                 ->delete();
 
