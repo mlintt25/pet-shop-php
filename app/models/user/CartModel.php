@@ -175,7 +175,6 @@ class CartModel extends Model {
 
             if ($insertBillData):
                 $billId = $this->db->lastId();
-                Session::data('bill_id', $billId);
 
                 if (!empty($data)):
                     unset($data[0]);
@@ -194,7 +193,7 @@ class CartModel extends Model {
                     endforeach;
 
                     if ($insertStatus):
-                        return true;
+                        return $billId;
                     endif;
                 endif;
             endif;
@@ -204,9 +203,7 @@ class CartModel extends Model {
     }
 
     // Xử lý thanh toán 
-    public function handlePayment($userId, $data, $paymentMethod) {
-        $billId = Session::data('bill_id');
-
+    public function handlePayment($userId, $data, $paymentMethod, $billId) {
         $queryGetBillDetail = $this->db->table('billdetail')
             ->select('billdetail.billid, billdetail.quantity, billdetail.price')
             ->join('bill', 'billdetail.billid = bill.billid')
@@ -258,16 +255,13 @@ class CartModel extends Model {
         endforeach;
 
         if ($deleteCart):
-            Session::delete('bill_id');
             return true;
         endif;
 
         return false;
     }
 
-    public function handleGetBillDetail($userId) {
-        $billId = Session::data('bill_id');
-
+    public function handleGetBillDetail($userId, $billId) {
         $queryGet = $this->db->table('billdetail')
             ->join('bill', 'bill.billid = billdetail.billid')    
             ->where('bill.userid', '=', $userId)
@@ -284,9 +278,7 @@ class CartModel extends Model {
     }
 
     // Xử lý xoá bill và billdetail khi unpayment
-    public function handleDeleleBillDetail($userId) {
-        $billId = Session::data('bill_id');
-
+    public function handleDeleleBillDetail($userId, $billId) {
         $queryGet = $this->db->table('billdetail')
             ->join('bill', 'bill.billid = billdetail.billid')    
             ->where('bill.userid', '=', $userId)
@@ -306,7 +298,6 @@ class CartModel extends Model {
                     ->delete();
                 
                 if ($deleteBill):
-                    Session::delete('bill_id');
                     return true;
                 endif;
             endif;

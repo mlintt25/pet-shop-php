@@ -166,9 +166,10 @@ class Cart extends Controller {
 
                 $result = $this->cartModel->handleCheckOut($userId, $data['paymentProduct']);
 
-                if ($result):
+                if (is_numeric($result)):
                     $response = [
                         'status' => true,
+                        'billId' => $result
                     ];
                 else:
                     $response = [
@@ -192,9 +193,10 @@ class Cart extends Controller {
             
             if (!empty($data['userId'])):
                 $userId = $data['userId'];
+                $billId = $data['billId'];
                 $paymentMethod = $data['payment_method'];
 
-                $result = $this->cartModel->handlePayment($userId, $data['paymentProduct'], $paymentMethod);
+                $result = $this->cartModel->handlePayment($userId, $data['paymentProduct'], $paymentMethod, $billId);
 
                 if ($result):
                     $response = [
@@ -223,9 +225,10 @@ class Cart extends Controller {
 
             if (!empty($data['userId'])):
                 $userId = $data['userId'];
+                $billId = $data['billId'];
 
                 if (!empty($userId)):
-                    $result = $this->cartModel->handleGetBillDetail($userId);
+                    $result = $this->cartModel->handleGetBillDetail($userId, $billId);
 
                     if (!empty($result)):
                         $response = [
@@ -255,9 +258,10 @@ class Cart extends Controller {
 
             if (!empty($data['userId'])):
                 $userId = $data['userId'];
+                $billId = $data['billId'];
 
                 if (!empty($userId)):
-                    $result = $this->cartModel->handleDeleleBillDetail($userId);
+                    $result = $this->cartModel->handleDeleleBillDetail($userId, $billId);
 
                     if ($result):
                         $response = [
