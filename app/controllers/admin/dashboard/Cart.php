@@ -38,4 +38,29 @@ class Cart extends Controller {
         endif;
     }
 
+     // Lấy danh sách tất cả hoá đơn chưa duyệt
+     public function getListAllBillPending() {
+        $request = new Request();
+
+        if ($request->isGet()):
+            $response = [];
+
+            $result = $this->cartModel->handleGetListAllBillPending();
+
+            if (!empty($result)):
+                $response = [
+                    'status' => true,
+                    'data' => $result
+                ];
+            else:
+                $response = [
+                    'status' => false,
+                    'message' => 'Đã có lỗi xảy ra'
+                ];
+            endif;
+
+            echo json_encode($response);
+        endif;
+    }
+
 }

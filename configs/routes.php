@@ -26,6 +26,7 @@ $routes['api/dashboard/confirmRegisterService'] = 'admin/dashboard/user/confirmR
 $routes['api/dashboard/getPendingService'] = 'admin/dashboard/user/getPendingService'; // API lấy danh sách dịch vụ đã đăng ký đăng chờ duyệt
 $routes['api/dashboard/isRegistered'] = 'admin/dashboard/user/isRegistered'; // API lấy trạng thái dịch vụ người dùng đã đăng ký
 $routes['api/dashboard/getPendingBill'] = 'admin/dashboard/cart/getListBillPending'; // API lấy danh sách hoá đơn chờ duyệt - User
+$routes['api/dashboard/getAllPendingBill'] = 'admin/dashboard/cart/getListAllBillPending'; // API lấy danh sách tất cả hoá đơn chờ duyệt - AdminPage
 
 
 // User API
