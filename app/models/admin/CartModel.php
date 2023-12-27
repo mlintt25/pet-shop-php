@@ -99,4 +99,28 @@ class CartModel extends Model {
 
         return $response;
     }
+
+    public function handleChangeBillStatus($billId) {
+        $queryCheck = $this->db->table('bill')
+            ->select('status')
+            ->where('billid', '=', $billId)
+            ->first();
+
+        if (!empty($queryCheck)):
+            $dataUpdate = [
+                'status' => 1,
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+
+            $updateStatus = $this->db->table('bill')
+                ->where('billid', '=', $billId)
+                ->update($dataUpdate);
+
+            if ($updateStatus):
+                return true;
+            endif;
+        endif;
+
+        return false;
+    }
 }
