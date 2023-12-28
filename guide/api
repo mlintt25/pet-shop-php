@@ -42,3 +42,4 @@ User
 15. API lấy danh sách tất cả hoá đơn chưa được duyệt: http://localhost:8082/Project_Pettu/api/dashboard/getAllPendingBill
 16. API duyệt trạng thái cho hoá đơn: http://localhost:8082/Project_Pettu/api/dashboard/changeBillStatus
 17. API lấy danh sách dịch vụ chưa thanh toán: http://localhost:8082/Project_Pettu/api/dashboard/getUnpaidService
+18. API duyệt trạng thái thanh toán cho dịch vụ người dùng đã đăng ký: http://localhost:8082/Project_Pettu/api/dashboard/changeServicePaymentStatus

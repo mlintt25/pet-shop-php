@@ -97,5 +97,32 @@ class ServiceModel extends Model {
 
         return $response;
     }
+
+    // Xử lý duyệt trạng thái đã thanh toán dịch vụ của người dùng 
+    public function handleChangeServicePaymentStatus($userId, $serviceId) {
+        $queryCheck = $this->db->table('user_service')
+            ->select('payment_status')
+            ->where('userid', '=', $userId)
+            ->where('serviceid', '=', $serviceId)
+            ->first();
+
+        if (!empty($queryCheck)):
+            $dataUpdate = [
+                'payment_status' => 1,
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+
+            $updateStatus = $this->db->table('user_service')
+                ->where('userid', '=', $userId)
+                ->where('serviceid', '=', $serviceId)
+                ->update($dataUpdate);
+
+            if ($updateStatus):
+                return true;
+            endif;
+        endif;
+
+        return false;
+    }
  
 }

@@ -29,6 +29,7 @@ $routes['api/dashboard/getPendingBill'] = 'admin/dashboard/cart/getListBillPendi
 $routes['api/dashboard/getAllPendingBill'] = 'admin/dashboard/cart/getListAllBillPending'; // API lấy danh sách tất cả hoá đơn chờ duyệt - AdminPage
 $routes['api/dashboard/changeBillStatus'] = 'admin/dashboard/cart/changeBillStatus'; // API duyệt trạng thái hoá đơn - AdminPage
 $routes['api/dashboard/getUnpaidService'] = 'admin/dashboard/service/getListUnpaidService'; // API lấy danh sách dịch vụ user chưa thanh toán - AdminPage
+$routes['api/dashboard/changeServicePaymentStatus'] = 'admin/dashboard/service/changeServicePaymentStatus'; // API duyệt trạng thái đã thanh toán dịch vụ - AdminPage
 
 
 // User API
