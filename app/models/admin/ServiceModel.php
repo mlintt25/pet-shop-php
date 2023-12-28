@@ -70,5 +70,32 @@ class ServiceModel extends Model {
 
         return $response;
     }
+
+    // Xử lý lấy danh sách dịch vụ chưa thanh toán của user
+    public function handleGetListUnpaidService() {
+        $queryGet = $this->db->table('user_service')
+            ->select('user_service.serviceid, user_service.userid, user_service.status, 
+                user_service.register_day, user_service.payment_status, user_service.created_at,
+                timeworking.timeworking')
+            ->join('timeworking', 'timeworking.id = user_service.periodTime')
+            ->get();
+
+        $response = [];
+        $checkNull = false;
+
+        if (!empty($queryGet)):
+            foreach ($queryGet as $key => $item):
+                if ($item === NULL || $item === ''):
+                    $checkNull = true;
+                endif;
+            endforeach;
+        endif;
+
+        if (!$checkNull):
+            $response = $queryGet;
+        endif;
+
+        return $response;
+    }
  
 }

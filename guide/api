@@ -39,6 +39,6 @@ User
 12. API lấy thông tin bill_detail: http://localhost:8082/Project_Pettu/api/users/billDetail
 13. API xoá bill - bill_detail khi unpayment: http://localhost:8082/Project_Pettu/api/users/deleteBillDetail
 14. API lấy danh sách hoá đơn đã được duyệt: http://localhost:8082/Project_Pettu/api/users/getApprovedBill
-14. API lấy danh sách tất cả hoá đơn chưa được duyệt: http://localhost:8082/Project_Pettu/api/dashboard/getAllPendingBill
-14. API duyệt trạng thái cho hoá đơn: http://localhost:8082/Project_Pettu/api/dashboard/changeBillStatus
-
+15. API lấy danh sách tất cả hoá đơn chưa được duyệt: http://localhost:8082/Project_Pettu/api/dashboard/getAllPendingBill
+16. API duyệt trạng thái cho hoá đơn: http://localhost:8082/Project_Pettu/api/dashboard/changeBillStatus
+17. API lấy danh sách dịch vụ chưa thanh toán: http://localhost:8082/Project_Pettu/api/dashboard/getUnpaidService
