@@ -5,6 +5,7 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: Authorization, X-Requested-With, Content-Type");
 header('Access-Control-Request-Method: application/json');
 header('Content-Type: application/x-www-form-urlencoded');
+header("Access-Control-Allow-Origin: *");
 
 // Xử lý http root
 if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on'):

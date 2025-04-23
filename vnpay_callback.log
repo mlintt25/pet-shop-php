@@ -1,0 +1,45 @@
+Array
+(
+    [vnp_Amount] => 59500000
+    [vnp_BankCode] => NCB
+    [vnp_BankTranNo] => VNP14921675
+    [vnp_CardType] => ATM
+    [vnp_OrderInfo] => Thanh toán đơn hàng
+    [vnp_PayDate] => 20250423093635
+    [vnp_ResponseCode] => 00
+    [vnp_TmnCode] => 3U7APEIS
+    [vnp_TransactionNo] => 14921675
+    [vnp_TransactionStatus] => 00
+    [vnp_TxnRef] => 1745375713
+    [vnp_SecureHash] => 0b43e1da1d42a49ffafe2c14ad7ba0430bfe7ec9f3e93816efee20883b6bde2830bd26a036083c9ca7bcb33935a5db8c8629b046b6d384d513fb379f7d700958
+)
+Array
+(
+    [vnp_Amount] => 59500000
+    [vnp_BankCode] => NCB
+    [vnp_BankTranNo] => VNP14921681
+    [vnp_CardType] => ATM
+    [vnp_OrderInfo] => Thanh toán đơn hàng
+    [vnp_PayDate] => 20250423093853
+    [vnp_ResponseCode] => 00
+    [vnp_TmnCode] => 3U7APEIS
+    [vnp_TransactionNo] => 14921681
+    [vnp_TransactionStatus] => 00
+    [vnp_TxnRef] => 182
+    [vnp_SecureHash] => 5320d152e79ac689a701e66150a5a9237b119942da9b697e8e4cb62b54aa592cb38966c838a036dae5cea118089150a5911ea0971427f1e03364032ad253b7d9
+)
+Array
+(
+    [vnp_Amount] => 59500000
+    [vnp_BankCode] => NCB
+    [vnp_BankTranNo] => VNP14921725
+    [vnp_CardType] => ATM
+    [vnp_OrderInfo] => Thanh toán đơn hàng
+    [vnp_PayDate] => 20250423100149
+    [vnp_ResponseCode] => 00
+    [vnp_TmnCode] => 3U7APEIS
+    [vnp_TransactionNo] => 14921725
+    [vnp_TransactionStatus] => 00
+    [vnp_TxnRef] => 182-1745377260
+    [vnp_SecureHash] => 0ed5a43c6e7490c5ff573ab4610c9dcd7468c5fc6c649e42b067dcc5ef2082ccb9190baa10127fd6df6aac27105f3f8e8ef981478dbea41e570cf7ce2831f35c
+)

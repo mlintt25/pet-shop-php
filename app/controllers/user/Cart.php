@@ -190,18 +190,20 @@ class Cart extends Controller {
             $json_data = file_get_contents("php://input");
             $data = json_decode($json_data, true); // Chuyển đổi JSON thành mảng PHP
             $response = [];
-            
+
             if (!empty($data['userId'])):
                 $userId = $data['userId'];
                 $billId = $data['billId'];
                 $paymentMethod = $data['payment_method'];
 
-                $result = $this->cartModel->handlePayment($userId, $data['paymentProduct'], $paymentMethod, $billId);
-
+                // $result = $this->cartModel->handlePayment($userId, $data['paymentProduct'], $paymentMethod, $billId);
+                $result = $this->cartModel->handlePayment($userId, $paymentMethod, $billId);
+                
                 if ($result):
                     $response = [
                         'status' => true,
-                        'message' => 'Thanh toán thành công'
+                        'message' => 'Thanh toán thành công',
+                        'data' => $result
                     ];
                 else:
                     $response = [

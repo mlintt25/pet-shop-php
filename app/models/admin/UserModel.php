@@ -20,7 +20,7 @@ class UserModel extends Model {
         $queryGet = $this->db->table('users')
             ->select('id, fullname, thumbnail, email, dob, address, phone, 
                 about_content, contact_facebook, contact_twitter, contact_linkedin,
-                contact_pinterest, status, create_at')
+                contact_pinterest, status, created_at')
             ->where('decentralization_id', '=', '2')
             ->get();
 
@@ -50,7 +50,7 @@ class UserModel extends Model {
         $queryGet = $this->db->table('users')
             ->select('id, fullname, thumbnail, email, dob, address, phone, 
                 about_content, contact_facebook, contact_twitter, contact_linkedin,
-                contact_pinterest, status, create_at')
+                contact_pinterest, status, created_at')
             ->where('decentralization_id', '=', '1')
             ->orWhere('decentralization_id', '=', '3')
             ->get();
@@ -85,7 +85,7 @@ class UserModel extends Model {
         if (!empty($queryGet)):
             $dataUpdate = [
                 'status' => $_POST['status'],
-                'update_at' => date('Y-m-d H:i:s')
+                'updated_at' => date('Y-m-d H:i:s')
             ];
 
             $updateStatus = $this->db->table('users')

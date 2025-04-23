@@ -23,7 +23,7 @@ class AuthModel extends Model {
             ->first();
 
         $response = [];
-        
+
         if (!empty($dbValue)):
             $passwordHash = $dbValue['password'];
             $userId = $dbValue['id'];
@@ -34,10 +34,10 @@ class AuthModel extends Model {
                 $dataToken = [
                     'user_id' => $userId,
                     'token' => $loginToken,
-                    'create_at' => date('Y-m-d H:i:s')
+                    'created_at' => date('Y-m-d H:i:s')
                 ];
 
-                if ($statusAccount === 1):
+                if ($statusAccount == 1):
                     $insertTokenStatus = $this->db->table('login_token')->insert($dataToken);
                     if ($insertTokenStatus):
                         // Lưu login token vào session
@@ -48,7 +48,7 @@ class AuthModel extends Model {
                                 dob, address, phone, password, about_content, 
                                 contact_facebook, contact_twitter, contact_linkedin,
                                 contact_pinterest, status, decentralization_id, 
-                                last_activity, create_at')
+                                last_activity, created_at')
                             ->where('id', '=', $userId)
                             ->first();
                         Session::data('user_data', $userData);
@@ -89,7 +89,7 @@ class AuthModel extends Model {
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'active_token' => $activeToken,
             'decentralization_id' => 2,
-            'create_at' => date('Y-m-d H:i:s')
+            'created_at' => date('Y-m-d H:i:s')
         ];
 
         $insertStatus = $this->db->table('users')->insert($dataInsert);

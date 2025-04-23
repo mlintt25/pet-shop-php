@@ -203,7 +203,7 @@ class CartModel extends Model {
     }
 
     // Xử lý thanh toán 
-    public function handlePayment($userId, $data, $paymentMethod, $billId) {
+    public function handlePayment($userId, $paymentMethod, $billId) {
         $queryGetBillDetail = $this->db->table('billdetail')
             ->select('billdetail.billid, billdetail.quantity, billdetail.price')
             ->join('bill', 'billdetail.billid = bill.billid')
@@ -232,17 +232,75 @@ class CartModel extends Model {
                 endif;
             endforeach;
 
-            if ($updateStatus):
-                $deleteAfterPayment = $this->handleDeleteAfterPayment($userId, $data);
-                if ($deleteAfterPayment):
-                    return true;
-                endif;
-            endif;
+            if ($updateStatus) {
+                $vpnUrl = $this->handleCreatePaymentUrl($billId);
+                return $vpnUrl;
+            }
+            // if ($updateStatus):
+            //     $deleteAfterPayment = $this->handleDeleteAfterPayment($userId, $data);
+            //     if ($deleteAfterPayment):
+            //         return true;
+            //     endif;
+            // endif;
         endif;
 
-        return false;
+        return null;
     }
  
+    public function handleCreatePaymentUrl($billId) {
+        global $config;
+
+        $bill = $this->db->table('bill')
+            ->select('total_price')
+            ->where('billid', '=', $billId)
+            ->first();
+
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $vnp_TmnCode    = $config['vn_pay']['vnp_TmnCode'];
+        $vnp_HashSecret = $config['vn_pay']['vnp_HashSecret'];
+        $vnp_Url        = $config['vn_pay']['vnp_Url'];
+        $vnp_Returnurl  = $config['vn_pay']['vnp_Returnurl'];
+    
+        $vnp_TxnRef     = $billId . '-' . time(); 
+        $vnp_OrderInfo  = "Thanh toán đơn hàng";
+        $vnp_Amount     = $bill['total_price'] * 100; 
+        $vnp_Locale     = "vn";
+        $vnp_IpAddr     = $_SERVER['REMOTE_ADDR'];
+        $vnp_OrderType  = "billpayment";
+        $vnp_CreateDate = date('YmdHis');
+        $vnp_ExpireDate = date('YmdHis', strtotime('+15 minutes'));
+    
+        $inputData = [
+            "vnp_Version"    => "2.1.0",
+            "vnp_TmnCode"    => $vnp_TmnCode,
+            "vnp_Amount"     => $vnp_Amount,
+            "vnp_Command"    => "pay",
+            "vnp_CreateDate" => $vnp_CreateDate,
+            "vnp_CurrCode"   => "VND",
+            "vnp_IpAddr"     => $vnp_IpAddr,
+            "vnp_Locale"     => $vnp_Locale,
+            "vnp_OrderInfo"  => $vnp_OrderInfo,
+            "vnp_OrderType"  => $vnp_OrderType,
+            "vnp_ReturnUrl"  => $vnp_Returnurl,
+            "vnp_TxnRef"     => $vnp_TxnRef,
+            "vnp_ExpireDate" => $vnp_ExpireDate
+        ];
+    
+        ksort($inputData);
+        $hashdataArr = [];
+        
+        foreach ($inputData as $key => $value) {
+            $hashdataArr[] = urlencode($key) . "=" . urlencode($value);
+        }
+
+        $hashdata = implode('&', $hashdataArr);
+        $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
+        $query = http_build_query($inputData);
+        $vnpUrl = $vnp_Url . "?" . $query . "&vnp_SecureHash=" . $vnpSecureHash;
+    
+        return $vnpUrl;
+    }
+
     // Xoá sau khi thanh toán billdetail - cart
     public function handleDeleteAfterPayment($userId, $data) {
         foreach ($data as $item):

@@ -34,7 +34,7 @@ class ProfileModel extends Model
                 'contact_twitter' => $_POST['contact_twitter'],
                 'contact_linkedin' => $_POST['contact_linkedin'],
                 'contact_pinterest' => $_POST['contact_pinterest'],
-                'update_at' => date('Y-m-d H:i:s')
+                'updated_at' => date('Y-m-d H:i:s')
             ];
 
             $updateStatus = $this->db->table('users')
@@ -50,7 +50,7 @@ class ProfileModel extends Model
                             dob, address, phone, password, about_content, 
                             contact_facebook, contact_twitter, contact_linkedin,
                             contact_pinterest, status, decentralization_id, 
-                            last_activity, create_at')
+                            last_activity, created_at')
                     ->where('id', '=', $userId)
                     ->first();
                 // Update lại session

@@ -48,4 +48,7 @@ $routes['api/users/paymentCart'] = 'user/cart/payment'; // API xác nhận thanh
 $routes['api/users/billDetail'] = 'user/cart/getBillDetail'; // API lấy thông tin trong billdetai - User
 $routes['api/users/deleteBillDetail'] = 'user/cart/deleleBillDetail'; // API xoá billdetai khi không thanh toán - User
 $routes['api/users/getApprovedBill'] = 'user/cart/getListBillApproved'; // API lấy danh sách hoá đơn đã được duyệt - User
+
+// Payment
+$routes['api/payment/callback'] = 'user/payment/receiveVNPayCallback'; // API tạo đường dẫn thanh toán - User
 ?>

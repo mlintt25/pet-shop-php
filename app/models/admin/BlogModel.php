@@ -22,7 +22,7 @@ class BlogModel extends Model {
     public function handleGetListBlog() {
         $listBlog = $this->db->table('blog')
             ->select('blog.title, blog.slug, blog.content, blog.view_count, 
-                blog.comment_count, blog.thumbnail, blog.descr, blog.create_at, 
+                blog.comment_count, blog.thumbnail, blog.descr, blog.created_at, 
                 blog_categories.name')
             ->join('blog_categories', 'blog.blog_category_id = blog_categories.id')
             ->get();
