@@ -23,7 +23,7 @@ class CartModel extends Model {
             ->join('billdetail', 'billdetail.billid = bill.billid')
             ->join('product', 'billdetail.productid = product.productid')
             ->where('bill.userid', '=', $userId)
-            ->where('bill.status', '=', 0)
+            ->where('bill.status', '=', 'pending')
             ->get();
 
         $response = [];
@@ -65,7 +65,7 @@ class CartModel extends Model {
                 billdetail.productid, billdetail.quantity, billdetail.price, product.product_name')
             ->join('billdetail', 'billdetail.billid = bill.billid')
             ->join('product', 'billdetail.productid = product.productid')
-            ->where('bill.status', '=', 0)
+            ->where('bill.status', '=', 'pending')
             ->get();
 
         $response = [];
@@ -108,7 +108,7 @@ class CartModel extends Model {
 
         if (!empty($queryCheck)):
             $dataUpdate = [
-                'status' => 1,
+                'status' => 'confirmed',
                 'updated_at' => date('Y-m-d H:i:s')
             ];
 
