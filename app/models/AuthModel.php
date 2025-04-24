@@ -93,22 +93,26 @@ class AuthModel extends Model {
         ];
 
         $insertStatus = $this->db->table('users')->insert($dataInsert);
-        if ($insertStatus):
-            // Tạo link active
-            $linkActive = _WEB_ROOT.'/auth/active?token='.$activeToken;
-            // Thiết lập mail
-            $subject = ucwords($_POST['fullname']).' ơi. Bạn vui lòng kích hoạt tài khoản';
-            $content = 'Chào bạn: '.ucwords($_POST['fullname']).'<br>';
-            $content .= 'Vui lòng click vào link dưới đây để kích hoạt tài khoản của bạn: <br>';
-            $content .= $linkActive.'<br>';
-            $content .= 'Trân trọng!';
 
-            $sendStatus = Mailer::sendMail($_POST['email'], $subject, $content);
+        if ($insertStatus) {
+            return true;
+        }
+        // if ($insertStatus):
+        //     // Tạo link active
+        //     $linkActive = _WEB_ROOT.'/auth/active?token='.$activeToken;
+        //     // Thiết lập mail
+        //     $subject = ucwords($_POST['fullname']).' ơi. Bạn vui lòng kích hoạt tài khoản';
+        //     $content = 'Chào bạn: '.ucwords($_POST['fullname']).'<br>';
+        //     $content .= 'Vui lòng click vào link dưới đây để kích hoạt tài khoản của bạn: <br>';
+        //     $content .= $linkActive.'<br>';
+        //     $content .= 'Trân trọng!';
 
-            if ($sendStatus):
-                return true;
-            endif;
-        endif;
+        //     $sendStatus = Mailer::sendMail($_POST['email'], $subject, $content);
+
+        //     if ($sendStatus):
+        //         return true;
+        //     endif;
+        // endif;
 
         return false;
     }
